@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    text-align: center;
+  }
+  
+  nav {
+    font-size: 20px;
+    background-color: gray;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  img {
+    width: 200px;
+    height: 200px;
+  }
+  
+  textarea {
+    overflow: hidden;
+  }
+  
+  .list-row {
+    display: inline-block;
+    width: 30%;
+    margin: 1%;
+  }
