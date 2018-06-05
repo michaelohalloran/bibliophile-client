@@ -1,0 +1,103 @@
+
+//handleLogin (fires when loginBtn pressed, passes loginData)=> 
+//submitLoginForm (actionCreator?, takes in loginData passed to it by handleLogin, makes Api call (POST request)=>
+//loginUser (if api call succeeds, then dispatch success action(loginUser action to update state w/ email and password))
+//if it fails, dispatch a failure action for handling failure state
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import history from '../history';
+
+export const setAuthToken = token=> {
+    if(token) {
+        //if there's a token, use it as the default authorization header for all requests
+        axios.defaults.headers.common['Authorization'] = token;
+    } else {
+        //if there's no token, delete auth header
+        delete axios.defaults.headers.common['Authorization'];
+    }
+}
+
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const setCurrentUser = decodedUser => {
+    return {
+        type: SET_CURRENT_USER,
+        payload: decodedUser
+    }
+}
+
+export const loginUser = (userData)=> dispatch=> {
+    axios.post('/api/users/login', userData)
+        .then(res=> {
+            const {token} = res.data;
+            localStorage.setItem('jwtToken', token);
+            setAuthToken(token);
+            const decoded = jwt_decode(token);
+            console.log(decoded);
+            dispatch(setCurrentUser(decoded));
+            history.push('/dashboard');
+            window.location = '/dashboard';
+            
+
+        })
+        .catch(err=>console.log('Logging in error', err));
+};
+
+export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
+export const loginUserSuccess = (user, token)=> {
+    type: LOGIN_USER_SUCCESS,
+    user,
+    token
+}
+
+//this dispatch will be result of a successful API call
+// export const submitLoginForm = loginData => (dispatch, getState) => {
+//     console.log('loginData coming from action', loginData);
+//     axios.post('/api/users/login', loginData)
+//         .then(loginData=>{
+//             let {email, password} = loginData;
+//             dispatch(loginUser(email, password));
+//         })
+
+//         // //save to localStorage
+//         // const {token} = res.data;
+//         // //set token to localStorage
+//         // localStorage.setItem('jwtToken', token);
+//         // //set token to auth Header
+//         // setAuthToken(token);
+//         // //decode token to get user data
+//         // const decoded = jwt_decode(token);
+//         // //set current user
+//         // dispatch(setCurrentUser(decoded));
+
+//     //if success, dispatch(loginUser)
+//     //when deployed, pass a variable for serverURL here, set in env file (process.env.SERVER)
+//     // fetch('localhost:8080/api/users/login', {
+//     //     method: 'POST',
+//     //     dataType: 'json',
+//     //     //CHECK DOCS FOR PASSING DATA
+//     //     loginData
+//     // })
+//     // .then(response=> response.json())
+//     // .then()
+//     //else failure
+// }
+
+export const logoutUser = ()=> dispatch=> {
+    // //remove the token
+    // localStorage.removeItem('jwtToken');
+    // //this deletes auth headers
+    // setAuthToken(false);
+    // //sets current user to null
+    // dispatch(setCurrentUser({}));
+    localStorage.clear();
+    window.location = '/login';
+};
+
+
+//REGISTER ACTIONS
+//************************************************************** */
+export const registerUser = (userData, history)=> dispatch=> {
+    axios.post('/api/users/register', userData)
+        .then(res=> history.push('/login'))
+        .catch(err=>console.log(err));
+};

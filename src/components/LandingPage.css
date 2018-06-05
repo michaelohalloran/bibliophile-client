@@ -1,0 +1,15 @@
+
+body {
+    background: url('https://familyreadingcorner.files.wordpress.com/2016/07/reading-in-nature.jpg') no-repeat fixed center center;
+    background-size: cover;
+}
+button {
+    padding: 5px;
+    margin: 5px;
+}
+
+input {
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+}

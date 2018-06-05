@@ -1,7 +1,7 @@
 import React from 'react';
-import './BookPage.css';
+import './SingleBookPage.css';
 
-const BookPage = ()=> (
+const SingleBookPage = ()=> (
     <div>
         <ul>
          <li>Title 1</li>
@@ -16,4 +16,4 @@ const BookPage = ()=> (
 );
 
 
-export default BookPage;
+export default SingleBookPage;
