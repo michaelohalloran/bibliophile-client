@@ -1,9 +1,16 @@
 import React, { Component } from 'react'
 import './DashboardPage.css';
 import {Link} from 'react-router-dom';
+import {fetchBooksFromDb} from '../actions/books';
+import BookItem from './BookItem';
 
 class DashboardPage extends Component {
 
+  componentDidMount() {
+    console.log('mounted Dashboard');
+    //grab all this user's books to show
+    //const bookDisplay = fetchBooksFromDb();
+  }
   
 
   render() {
@@ -12,6 +19,10 @@ class DashboardPage extends Component {
         <Link to="/search"><button>Search for Books</button></Link><br/>
 
         {/* hit backend route for getting all user posts, display here */}
+        {/* make BookItem component */}
+        {/* {bookDisplay.map(book=> {
+          <BookItem book={book}/>
+        })} */}
 
         <div className="list-row">
         Title: Title1
@@ -48,5 +59,8 @@ class DashboardPage extends Component {
 }
 
 
+const mapStateToProps = state => ({
+  books: state.booksReducer.books
+});
 
-export default DashboardPage;
+export default connect(mapStateToProps, {fetchBooksFromDb})(DashboardPage);

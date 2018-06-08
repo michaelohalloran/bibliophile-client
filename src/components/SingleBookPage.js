@@ -1,19 +1,35 @@
 import React from 'react';
 import './SingleBookPage.css';
+import {deleteBookReview} from '../actions/books';
 
-const SingleBookPage = ()=> (
+const SingleBookPage = (props)=> (
     <div>
-        <ul>
-         <li>Title 1</li>
-         <img src="http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/2v/dp/p02vdpfn.jpg"></img>
-         <li>Price: $5</li>
-          <textarea>Lorem ipsum dolor sit amet, in dicta consul semper vel, vis at sumo mundi quidam, in reque epicuri nominavi nec. Duo malis feugiat ea, vis ex meis iusto comprehensam. Cu petentium definitiones pri, nullam erroribus maluisset te nam. Eum ex augue voluptatum, et zril labitur equidem his. His eu nostrum deleniti pertinax, ex ubique invenire erroribus nam, quo ne homero neglegentur.</textarea>
-        </ul>
+        <div>
+         <h3>Title: {props.book.title}</h3>
+         <p>Author: {props.book.author}</p>
+         <img src={`${props.book.thumbnail}`} alt={props.book.title} />
+         <p>Price: {props.book.price}</p>
+         <p>Rating: {props.book.avgRating}</p>
+        </div>
 
-        <button>Edit post</button>
-        <button>Delete post</button>
+        <div>
+            <textarea>
+            Lorem ipsum dolor sit amet, in dicta consul semper vel, vis at sumo mundi quidam, 
+            in reque epicuri nominavi nec. Duo malis feugiat ea, vis ex meis iusto comprehensam. 
+            Cu petentium definitiones pri, nullam erroribus maluisset te nam. 
+            Eum ex augue voluptatum, et zril labitur equidem his. His eu nostrum deleniti pertinax, 
+            ex ubique invenire erroribus nam, quo ne homero neglegentur.
+            </textarea>
+        </div>
+
+        <button onClick={()=>console.log('hit Edit post button')}>Edit post</button>
+        <button onClick={()=>console.log('hit Delete post button')}>Delete post</button>
+        {/* <button onClick={()=>this.props.deleteBookReview(props.review.id)}>Delete post</button> */}
+        
     </div>
 );
 
-
-export default SingleBookPage;
+const mapStateToProps = state => ({
+    books: state.books
+});
+export default connect(mapStateToProps, {deleteBookReview})(SingleBookPage);
