@@ -3,28 +3,32 @@ import './DashboardPage.css';
 import {Link} from 'react-router-dom';
 import {fetchBooksFromDb} from '../actions/books';
 import BookItem from './BookItem';
+import {connect} from 'react-redux';
+
 
 class DashboardPage extends Component {
 
   componentDidMount() {
     console.log('mounted Dashboard');
     //grab all this user's books to show
-    //const bookDisplay = fetchBooksFromDb();
+    this.props.fetchBooksFromDb();
   }
   
 
   render() {
+    const {books} = this.props.books;
+    console.log('book props are', books);
+    const bookDisplay = books.map((book, i)=> (
+      <BookItem key={i} book={book}/>
+    ))
     return (
       <div>
         <Link to="/search"><button>Search for Books</button></Link><br/>
+        <ul>
+          {bookDisplay}
+        </ul>
 
-        {/* hit backend route for getting all user posts, display here */}
-        {/* make BookItem component */}
-        {/* {bookDisplay.map(book=> {
-          <BookItem book={book}/>
-        })} */}
-
-        <div className="list-row">
+        {/* <div className="list-row">
         Title: Title1
         <br />
         Price: $5
@@ -52,7 +56,7 @@ class DashboardPage extends Component {
         <img src="http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_640/images/live/p0/2v/dp/p02vdpfn.jpg"></img>
         <br />
         <Link to="/book">Read more</Link>
-        </div>
+        </div> */}
       </div>
     )
   }
@@ -60,7 +64,7 @@ class DashboardPage extends Component {
 
 
 const mapStateToProps = state => ({
-  books: state.booksReducer.books
+  books: state.books
 });
 
 export default connect(mapStateToProps, {fetchBooksFromDb})(DashboardPage);

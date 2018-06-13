@@ -1,5 +1,5 @@
 import uuid from 'uuid';
-import axios from 'axios';
+// import axios from 'axios';
 //search for book and pull in API data
 //save books searched for to reading list on bookPage
 //make book review
@@ -7,8 +7,9 @@ import axios from 'axios';
 //delete book review
 //delete book from saved list
 
+export const GET_BOOKS = 'GET_BOOKS';
 export const fetchBooksFromDb = ()=> dispatch => {
-    fetch('/api/books', {
+    fetch('/api/books/all', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -17,9 +18,12 @@ export const fetchBooksFromDb = ()=> dispatch => {
         }
     })
         .then(res=>res.json())
-        .then(response=> {
-            return dispatch(showBooks())
+        .then(data=> {
             console.log('Ran fetchBooksFromDb');
+            dispatch({
+                type: GET_BOOKS,
+                payload: data
+            })
         })
         .catch(err=>console.log(err));
 };
@@ -43,7 +47,7 @@ export const getBookData = (searchTerm)=> dispatch => {
                     desc:book.volumeInfo.description,
                     pageCount:book.volumeInfo.pageCount,
                     avgRating: book.volumeInfo.averageRating ? book.volumeInfo.averageRating : 'No rating found',
-                    thumbnail: book.volumeInfo.imageLinks.thumbnail
+                    image: book.volumeInfo.imageLinks.thumbnail ? book.volumeInfo.imageLinks.thumbnail : null
                 }
                 booksArray.push(bookItem);
             })
@@ -148,16 +152,37 @@ export const removeBook = ({id}={})=> ({
 //BOOK REVIEW/COMMENTS ACTIONS
 
 export const MAKE_BOOK_REVIEW = 'MAKE_BOOK_REVIEW';
-export const makeBookReview = (text)=> ({
-    type: MAKE_BOOK_REVIEW,
-    text
-});
+export const makeBookReview = (bookReview, history)=> dispatch=> {
+    fetch(`/api/books/review/${bookReview.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            //saved jwtToken to include 'Bearer' at the front
+            'Authorization': `${localStorage.getItem('jwtToken')}`
+        },
+        body: JSON.stringify(bookReview)
+    })
+        .then(res=> {
+            // dispatch({
+            //     type: MAKE_BOOK_REVIEW,
+            //     bookReview
+            // })
+            history.push('/dashboard');
+        })
+        .catch(err=>console.log(err));
+};
 
 export const DELETE_BOOK_REVIEW =  'DELETE_BOOK_REVIEW';
-export const deleteBookReview = ({id}={})=> ({
-    type: DELETE_BOOK_REVIEW,
-    id    
-});
+export const deleteBookReview = (bookId, history) => dispatch => {
+    console.log('bookId inside deleteBookReview is ', bookId)
+    fetch(`api/books/review/${bookId}`)
+        .then(res=>res.json())
+        .then(data=> {
+            history.push('/dashboard');
+        })
+        .catch(err=>console.log(err))
+}
+
 
 export const EDIT_BOOK_REVIEW = 'EDIT_BOOK_REVIEW';
 export const editBookReview = (id, updates)=> ({

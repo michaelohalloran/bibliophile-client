@@ -6,7 +6,7 @@ import authReducer from './authReducer';
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    booksReducer,
+    books: booksReducer,
     filters: filtersReducer
 });
 

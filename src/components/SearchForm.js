@@ -38,34 +38,70 @@ class SearchForm extends Component {
   handleSearch(e) {
     e.preventDefault();
     let searchTerm = e.target.searchInput.value.trim();
+    //the following action updates the searchResults state with the searched books data
     this.props.getBookData(searchTerm);
     e.target.searchInput.value = '';
-  }
-
-  render() {
-    const {books} = this.props;
-    // console.log('render showBooks is', showBooks);
-    books.map((book, index)=> (
+    const {searchResults} = this.props;
+    const bookDisplay = searchResults.map((book, index)=> (
       <div key={index}>
         <h1 className='title'>{book.title}</h1><br/>
         {book.price && <p className='price'>Price: {book.price}</p>}<br/>
         {book.author.length>0 && <p>Author: {book.author}</p>}<br/>
-        {book.thumbnail && <img className='image'src={`${book.thumbnail}`} alt={book.title}/>}
+        {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
         {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
         {book.desc && <p className='desc'>Desc: {book.desc}</p>}
         {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
         <button onClick={()=>this.handleSave(book)}>Save Book</button>
       </div>
-    ));
+    ))
+  }
+
+  // componentDidUpdate(prevProps) {
+  //   if(!prevProps.searchResults) {
+  //     const {searchResults} = this.props;
+  //     let bookDisplay;
+  //     bookDisplay = searchResults.map((book, index)=> (
+  //       <div key={index}>
+  //         <h1 className='title'>{book.title}</h1><br/>
+  //         {book.price && <p className='price'>Price: {book.price}</p>}<br/>
+  //         {book.author.length>0 && <p>Author: {book.author}</p>}<br/>
+  //         {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
+  //         {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
+  //         {book.desc && <p className='desc'>Desc: {book.desc}</p>}
+  //         {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
+  //         <button onClick={()=>this.handleSave(book)}>Save Book</button>
+  //       </div>
+  //     ));
+  //   }
+  // }
+
+  render() {
+    const {books} = this.props;
+    // const {searchResults} = this.props;
+    // console.log('searchResults props: ', this.props.searchResults);
+    // console.log('render showBooks is', showBooks);
+    // const bookDisplay = books.map((book, index)=> (
+    //   <div key={index}>
+    //     <h1 className='title'>{book.title}</h1><br/>
+    //     {book.price && <p className='price'>Price: {book.price}</p>}<br/>
+    //     {book.author.length>0 && <p>Author: {book.author}</p>}<br/>
+    //     {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
+    //     {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
+    //     {book.desc && <p className='desc'>Desc: {book.desc}</p>}
+    //     {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
+    //     <button onClick={()=>this.handleSave(book)}>Save Book</button>
+    //   </div>
+    // ));
     return (
       <div>
+        <h1>Search</h1>
         <form onSubmit={this.handleSearch}>
           <input type="text" name="searchInput" placeholder="Search for a title/author"/>
           <button>Search</button>
         </form>
 
         <ul id="searchResults">
-          {books}
+          {/* {bookDisplay === "undefined" ? (null) : (bookDisplay)} */}
         </ul>
       </div>
     )
@@ -96,6 +132,7 @@ class SearchForm extends Component {
 
 const mapStateToProps = state=>({
   //we gave the booksReducer state an empty key called books, which is why this uses .books
-  books: state.booksReducer.books
+  books: state.books,
+  searchResults: state.searchResults
 });
 export default connect(mapStateToProps, {getBookData, saveBookToDb})(withRouter(SearchForm));

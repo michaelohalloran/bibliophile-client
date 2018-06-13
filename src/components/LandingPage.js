@@ -27,8 +27,8 @@ class LandingPage extends React.Component {
 
                 {/* <LoginForm handleLogin={this.handleLogin}/> */}
                 {/* <button onSubmit={()=>console.log('hit sign up btn')}>Sign up</button> */}
-                <Link to='/login'><button>Login</button></Link>
-                <Link to='/register'><button>Sign Up</button></Link>
+                {/* <Link to='/login'><button>Login</button></Link>
+                <Link to='/register'><button>Sign Up</button></Link> */}
         </div>
         );
     }

@@ -1,5 +1,6 @@
 import {
     getBookData, 
+    GET_BOOKS,
     addBook, 
     editBookReview, 
     EDIT_BOOK_REVIEW,
@@ -13,7 +14,7 @@ import {
 
 const initialState = {
     books: [],
-    reviews: []
+    searchResults: []
 };
 
 const booksReducer = (state=initialState, action)=> {
@@ -23,6 +24,11 @@ const booksReducer = (state=initialState, action)=> {
                 ...state, 
                 {books:action.book}
             ];
+        case GET_BOOKS:
+            return {
+                ...state,
+                books: action.payload
+            }
         case REMOVE_BOOK:
             return state.books.filter(book=>book.id !==action.id);
         case EDIT_BOOK_REVIEW:
@@ -35,7 +41,7 @@ const booksReducer = (state=initialState, action)=> {
                 } 
             });
         case GET_BOOK_DATA_SUCCESS:
-            return Object.assign({}, state, {books: action.books});    
+            return Object.assign({}, state, {searchResults: action.books});    
         case DELETE_BOOK_REVIEW:
             return state.reviews.filter(review => review.id !== action.id)               
         default :
