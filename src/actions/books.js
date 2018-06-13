@@ -143,10 +143,32 @@ export const saveBook = (book) => ({
 
 
 export const REMOVE_BOOK = 'REMOVE_BOOK';
-export const removeBook = ({id}={})=> ({
-    type: REMOVE_BOOK,
-    id    
-});
+export const removeBook = (id)=> dispatch=> {
+    console.log('hit removeBook action');
+    fetch(`/api/books/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            //saved jwtToken to include 'Bearer' at the front
+            'Authorization': `${localStorage.getItem('jwtToken')}`
+        },
+        // body: JSON.stringify(id)
+        // // body: JSON.stringify({id})
+
+    })
+        // .then(res=>res.json())
+        .then(res=> res.json())
+        // console.log('response inside removeBook is', response.json());
+        .then(data=> {
+            //alternative: after deleting book on backend, re-call GET_BOOKS, and now updated state should be shown
+            // dispatch(fetchBooksFromDb());
+            dispatch({
+                type: REMOVE_BOOK,
+                id    
+            })
+        })
+        .catch(err=>console.log(err))
+};
 
 //**************************************************************** */
 //BOOK REVIEW/COMMENTS ACTIONS

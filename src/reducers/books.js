@@ -41,7 +41,9 @@ const booksReducer = (state=initialState, action)=> {
                 } 
             });
         case GET_BOOK_DATA_SUCCESS:
-            return Object.assign({}, state, {searchResults: action.books});    
+            return Object.assign({}, state, {books: action.books});    
+            // return Object.assign({}, state, {searchResults: action.books});    
+
         case DELETE_BOOK_REVIEW:
             return state.reviews.filter(review => review.id !== action.id)               
         default :

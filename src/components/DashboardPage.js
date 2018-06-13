@@ -1,12 +1,24 @@
 import React, { Component } from 'react'
 import './DashboardPage.css';
 import {Link} from 'react-router-dom';
-import {fetchBooksFromDb} from '../actions/books';
+import {fetchBooksFromDb, removeBook} from '../actions/books';
 import BookItem from './BookItem';
 import {connect} from 'react-redux';
 
 
 class DashboardPage extends Component {
+
+  constructor(props) {
+    super(props)
+
+    // this.handleDeleteBook = this.handleDeleteBook.bind(this);
+  }
+
+  handleDeleteBook(id) {
+    console.log('handleDeleteBook function firing, id is ', id);
+    this.props.removeBook(id);
+
+  }
 
   componentDidMount() {
     console.log('mounted Dashboard');
@@ -19,7 +31,7 @@ class DashboardPage extends Component {
     const {books} = this.props.books;
     console.log('book props are', books);
     const bookDisplay = books.map((book, i)=> (
-      <BookItem key={i} book={book}/>
+      <BookItem key={i} book={book} onDeleteClick={this.handleDeleteBook.bind(this, book._id)}/>
     ))
     return (
       <div>
@@ -67,4 +79,4 @@ const mapStateToProps = state => ({
   books: state.books
 });
 
-export default connect(mapStateToProps, {fetchBooksFromDb})(DashboardPage);
+export default connect(mapStateToProps, {fetchBooksFromDb, removeBook})(DashboardPage);

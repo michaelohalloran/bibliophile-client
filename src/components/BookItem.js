@@ -15,7 +15,7 @@ const BookItem = (props) => {
         <img src={`${props.book.image}`} alt={props.book.title}></img>
         <br />
         <Link to={`/book/${props.book._id}`}>Read more</Link>
-        <button onClick={()=>'Hit Delete book button'}>Delete book</button>
+        <button onClick={props.onDeleteClick}>Delete book</button>
         {/* <button onClick={()=>this.props.removeBook(props.book.id)}>Delete book</button> */}
         
       </li>

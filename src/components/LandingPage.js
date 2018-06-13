@@ -22,7 +22,7 @@ class LandingPage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Bibliophile</h1>
+                {/* <h1>Bibliophile</h1> */}
                 <h2>Do you love to read?  Then you've come to the right place</h2>
 
                 {/* <LoginForm handleLogin={this.handleLogin}/> */}

@@ -41,19 +41,19 @@ class SearchForm extends Component {
     //the following action updates the searchResults state with the searched books data
     this.props.getBookData(searchTerm);
     e.target.searchInput.value = '';
-    const {searchResults} = this.props;
-    const bookDisplay = searchResults.map((book, index)=> (
-      <div key={index}>
-        <h1 className='title'>{book.title}</h1><br/>
-        {book.price && <p className='price'>Price: {book.price}</p>}<br/>
-        {book.author.length>0 && <p>Author: {book.author}</p>}<br/>
-        {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
-        {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
-        {book.desc && <p className='desc'>Desc: {book.desc}</p>}
-        {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
-        <button onClick={()=>this.handleSave(book)}>Save Book</button>
-      </div>
-    ))
+    // const {searchResults} = this.props;
+    // const bookDisplay = searchResults.map((book, index)=> (
+    //   <div key={index}>
+    //     <h1 className='title'>{book.title}</h1><br/>
+    //     {book.price && <p className='price'>Price: {book.price}</p>}<br/>
+    //     {book.author.length>0 && <p>Author: {book.author}</p>}<br/>
+    //     {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
+    //     {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
+    //     {book.desc && <p className='desc'>Desc: {book.desc}</p>}
+    //     {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
+    //     <button onClick={()=>this.handleSave(book)}>Save Book</button>
+    //   </div>
+    // ))
   }
 
   // componentDidUpdate(prevProps) {
@@ -76,22 +76,23 @@ class SearchForm extends Component {
   // }
 
   render() {
-    const {books} = this.props;
-    // const {searchResults} = this.props;
-    // console.log('searchResults props: ', this.props.searchResults);
+    const {books} = this.props.books;
+    // const {searchResults} = this.props.searchResults;
+    console.log('books props: ', this.props.books);
+    console.log('searchResults props: ', this.props.searchResults);
     // console.log('render showBooks is', showBooks);
-    // const bookDisplay = books.map((book, index)=> (
-    //   <div key={index}>
-    //     <h1 className='title'>{book.title}</h1><br/>
-    //     {book.price && <p className='price'>Price: {book.price}</p>}<br/>
-    //     {book.author.length>0 && <p>Author: {book.author}</p>}<br/>
-    //     {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
-    //     {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
-    //     {book.desc && <p className='desc'>Desc: {book.desc}</p>}
-    //     {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
-    //     <button onClick={()=>this.handleSave(book)}>Save Book</button>
-    //   </div>
-    // ));
+    const bookDisplay = books.map((book, index)=> (
+      <div key={index}>
+        <h1 className='title'>{book.title}</h1><br/>
+        {book.price && <p className='price'>Price: {book.price}</p>}<br/>
+        {book.author.length>0 && <p>Author: {book.author}</p>}<br/>
+        {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
+        {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
+        {book.desc && <p className='desc'>Desc: {book.desc}</p>}
+        {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
+        <button onClick={()=>this.handleSave(book)}>Save Book</button>
+      </div>
+    ));
     return (
       <div>
         <h1>Search</h1>
@@ -102,6 +103,7 @@ class SearchForm extends Component {
 
         <ul id="searchResults">
           {/* {bookDisplay === "undefined" ? (null) : (bookDisplay)} */}
+          {bookDisplay}
         </ul>
       </div>
     )
