@@ -30,6 +30,7 @@ const booksReducer = (state=initialState, action)=> {
                 books: action.payload
             }
         case REMOVE_BOOK:
+        //return all books whose Id's don't match the one we just deleted
             return state.books.filter(book=>book.id !==action.id);
         case MAKE_BOOK_REVIEW: 
         return {
@@ -38,21 +39,37 @@ const booksReducer = (state=initialState, action)=> {
                 //if a book object's id matches the action id...
                 if(book.id === action.bookId) {
                     //spread out the state, give that book's review prop our action.bookReview
-                    return [
-                        ...state.books,
-                        state.books.map(book=> {
-                            if(book.id === action.bookId) {
-                                return {...book, review: action.bookReview};
-                            } else {
-                                return {...book};
-                            }
-                        })
-                    ]
+                    return {
+                        ...book,
+                        review: action.bookReview
+                    };
                 } else {
-                    return [...state.books];
+                    return {...book};
                 }
             })
         }
+
+        // return {
+        //     ...state,
+        //     books: state.books.map((book,i)=> {
+        //         //if a book object's id matches the action id...
+        //         if(book.id === action.bookId) {
+        //             //spread out the state, give that book's review prop our action.bookReview
+        //             return [
+        //                 ...state.books,
+        //                 state.books.map(book=> {
+        //                     if(book.id === action.bookId) {
+        //                         return {...book, review: action.bookReview};
+        //                     } else {
+        //                         return {...book};
+        //                     }
+        //                 })
+        //             ]
+        //         } else {
+        //             return [...state.books];
+        //         }
+        //     })
+        // }
             // return {
             //     ...state,
             //     books: [
@@ -86,7 +103,12 @@ const booksReducer = (state=initialState, action)=> {
             // return Object.assign({}, state, {searchResults: action.books});    
 
         case DELETE_BOOK_REVIEW:
-            return state.reviews.filter(review => review.id !== action.id)               
+            // return state.reviews.filter(review => review.id !== action.id)          
+            return {
+                ...state,
+                //return only books with Id's NOT matching the action id (the one we're deleting)
+                books: state.books.filter(book=> book.id !== action.bookId) 
+            }
         default :
             return state
     }

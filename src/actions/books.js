@@ -147,7 +147,7 @@ export const saveBook = (book) => dispatch => {
 
 export const REMOVE_BOOK = 'REMOVE_BOOK';
 export const removeBook = (id)=> dispatch=> {
-    console.log('hit removeBook action');
+    console.log('hit removeBook action, id is ', id);
     fetch(`/api/books/${id}`, {
         method: 'DELETE',
         headers: {
@@ -157,18 +157,18 @@ export const removeBook = (id)=> dispatch=> {
         },
         // body: JSON.stringify(id)
         // // body: JSON.stringify({id})
-
     })
-        // .then(res=>res.json())
         .then(res=> res.json())
-        // console.log('response inside removeBook is', response.json());
+        // console.log('response inside removeBook is', res.json());
         .then(data=> {
+            console.log('inside second then block for removeBook');
             //alternative: after deleting book on backend, re-call GET_BOOKS, and now updated state should be shown
             // dispatch(fetchBooksFromDb());
             dispatch({
                 type: REMOVE_BOOK,
                 id    
             })
+            window.location = '/dashboard';
         })
         .catch(err=>console.log(err))
 };
@@ -203,14 +203,41 @@ export const makeBookReview = (bookReview, bookId, history)=> dispatch=> {
 };
 
 export const DELETE_BOOK_REVIEW =  'DELETE_BOOK_REVIEW';
-export const deleteBookReview = (bookId, history) => dispatch => {
+export const deleteBookReview = (bookId) => dispatch => {
     console.log('bookId inside deleteBookReview is ', bookId)
-    fetch(`api/books/review/${bookId}`)
-        .then(res=>res.json())
-        .then(data=> {
-            history.push('/dashboard');
+    // fetch(`api/books/review/${bookId}`)
+    //     .then(res=>res.json())
+    //     .then(data=> {
+    //         history.push('/dashboard');
+    //     })
+    //     .catch(err=>console.log(err))
+
+        fetch(`/api/books/review/${bookId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                //saved jwtToken to include 'Bearer' at the front
+                'Authorization': `${localStorage.getItem('jwtToken')}`
+            }
         })
-        .catch(err=>console.log(err))
+        .then(res=> {
+            res.json();
+        })
+        .then(data=> {
+            dispatch({
+                type: DELETE_BOOK_REVIEW,
+                bookId
+            })
+            // window.location = '/dashboard';
+        })
+        // .then(data=> {
+        //     console.log('second then block in deleteReview');
+        //     dispatch({
+        //         type: GET_BOOKS,
+        //         payload: data
+        //     })
+        //     window.location = '/dashboard';
+        // })
 }
 
 

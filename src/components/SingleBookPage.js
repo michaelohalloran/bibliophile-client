@@ -9,14 +9,18 @@ class SingleBookPage extends Component {
     componentDidMount() {
         this.props.fetchBooksFromDb();
     }
-    // constructor() {
-    //     super();
-    //     this.state = {
-    //         review: ''
-    //     }
-    //     this.onChange = this.onChange.bind(this);
-    //     this.onSubmit = this.onSubmit.bind(this);
-    // }
+    constructor() {
+        super();
+ 
+        // this.onChange = this.onChange.bind(this);
+        // this.onSubmit = this.onSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
+
+    handleDelete(bookId) {
+        console.log('inside handleDelete on singleBookPage, bookID is ', this.props.match.params.id);
+        this.props.deleteBookReview(this.props.match.params.id);
+    }
 
     // onChange(e) {
     //     e.preventDefault();
@@ -65,7 +69,7 @@ class SingleBookPage extends Component {
             {singleBook.review.length > 0 ? (
                 <div>
                     <Link to="/edit-review">Edit book review</Link>
-                    <button onClick={()=>console.log('hit Delete post button')}>Delete review</button>
+                    <button onClick={this.handleDelete}>Delete review</button>
                 </div>
             ) : (
                 <Link to={`/add-review/${this.props.match.params.id}`}>Add a book review</Link>
