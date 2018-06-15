@@ -1,24 +1,53 @@
 import React, {Component} from 'react';
 import './SingleBookPage.css';
-import {deleteBookReview} from '../actions/books';
+import {deleteBookReview, fetchBooksFromDb} from '../actions/books';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 class SingleBookPage extends Component {
 
+    componentDidMount() {
+        this.props.fetchBooksFromDb();
+    }
+    // constructor() {
+    //     super();
+    //     this.state = {
+    //         review: ''
+    //     }
+    //     this.onChange = this.onChange.bind(this);
+    //     this.onSubmit = this.onSubmit.bind(this);
+    // }
+
+    // onChange(e) {
+    //     e.preventDefault();
+    //     this.setState({
+    //         review: e.target.value
+    //     })
+    // }
+
+    // onSubmit(e) {
+    //     e.preventDefault();
+    //     //dispatch makeBookReview, show updated state
+    // }
+
   render() {
       //this is state.books.books
-    const {books} = this.props.books;
+    const {books} = this.props;
+    console.log('this.props inside SingleBookPage', this.props);
     console.log('book props inside SingleBookPage', books);
     //find this book by Id
     // console.log(this.props.match.params);
+    //this makes an array consisting solely of the book whose ID is the URL
     const bookArray = books.filter(book=> {
         return book._id.toString() === this.props.match.params.id;
     })
 
+    //this is the first and only item from booksArray:
     let singleBook = bookArray[0];
     console.log('singleBook is ', singleBook);
+    console.log('current singleBook review is ', singleBook.review);
 
+    //display the book, with either add or edit/delete review buttons
     const bookDiv = 
         <div>
             <h3>Title: {singleBook.title}</h3>
@@ -26,21 +55,21 @@ class SingleBookPage extends Component {
             <img src={`${singleBook.image}`} alt={singleBook.title} />
             <p>Price: {singleBook.price}</p>
             <p>Rating: {singleBook.rating}</p>
-            <textarea>
-            Lorem ipsum dolor sit amet, in dicta consul semper vel, vis at sumo mundi quidam, 
+            <p>Review: {singleBook.review}</p>
+            {/* Lorem ipsum dolor sit amet, in dicta consul semper vel, vis at sumo mundi quidam, 
             in reque epicuri nominavi nec. Duo malis feugiat ea, vis ex meis iusto comprehensam. 
             Cu petentium definitiones pri, nullam erroribus maluisset te nam. 
             Eum ex augue voluptatum, et zril labitur equidem his. His eu nostrum deleniti pertinax, 
-            ex ubique invenire erroribus nam, quo ne homero neglegentur.
-            </textarea>
-            {/* {singleBook.review.length > 0 ? (
+            ex ubique invenire erroribus nam, quo ne homero neglegentur. */}
+        
+            {singleBook.review.length > 0 ? (
                 <div>
                     <Link to="/edit-review">Edit book review</Link>
-                    <button onClick={()=>console.log('hit Delete post button')}>Delete post</button>
+                    <button onClick={()=>console.log('hit Delete post button')}>Delete review</button>
                 </div>
             ) : (
-                <Link to="/add-review">Add a book review</Link>
-            )} */}
+                <Link to={`/add-review/${this.props.match.params.id}`}>Add a book review</Link>
+            )}
         </div>
 
     
@@ -106,7 +135,7 @@ class SingleBookPage extends Component {
 // );
 
 const mapStateToProps = state => ({
-    books: state.books
+    books: state.books.books
 });
 
-export default connect(mapStateToProps, {deleteBookReview})(SingleBookPage);
+export default connect(mapStateToProps, {deleteBookReview, fetchBooksFromDb})(SingleBookPage);

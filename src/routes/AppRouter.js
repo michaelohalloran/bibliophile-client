@@ -46,7 +46,7 @@ class AppRouter extends Component {
                     <Route exact path="/dashboard" component={DashboardPage}/>
                     <Route exact path="/book/:id" component={SingleBookPage}/>
                     <Route exact path="/search" component={SearchForm}/>
-                    <Route exact path="/add-review" component={AddReview}/>
+                    <Route exact path="/add-review/:book_id" component={AddReview}/>
                     <Route exact path="/edit-review" component={EditReview}/>
                 </Switch>
             </div>

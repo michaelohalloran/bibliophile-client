@@ -27,7 +27,8 @@ class SearchForm extends Component {
     const savedBook = {
       title: book.title,
       author: book.author,
-      image: book.thumbnail,
+      image: book.image,
+      // image: book.thumbnail,
       price: book.price,
       rating: book.avgRating || 0
     }
@@ -76,23 +77,39 @@ class SearchForm extends Component {
   // }
 
   render() {
-    const {books} = this.props.books;
-    // const {searchResults} = this.props.searchResults;
-    console.log('books props: ', this.props.books);
-    console.log('searchResults props: ', this.props.searchResults);
-    // console.log('render showBooks is', showBooks);
-    const bookDisplay = books.map((book, index)=> (
-      <div key={index}>
-        <h1 className='title'>{book.title}</h1><br/>
-        {book.price && <p className='price'>Price: {book.price}</p>}<br/>
-        {book.author.length>0 && <p>Author: {book.author}</p>}<br/>
-        {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
-        {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
-        {book.desc && <p className='desc'>Desc: {book.desc}</p>}
-        {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
-        <button onClick={()=>this.handleSave(book)}>Save Book</button>
-      </div>
-    ));
+    let {searchResults} = this.props;
+    console.log('searchResults are ', searchResults);
+    
+    // {searchResults && searchResults.map((book,i)=> {
+    //   <div key={i}>
+    //     <h1 className='title'>{book.title}</h1><br/>
+    //     {book.price && <p className='price'>Price: {book.price}</p>}<br/>
+    //     {book.author.length>0 && <p>Author: {book.author}</p>}<br/>
+    //     {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
+    //     {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
+    //     {book.desc && <p className='desc'>Desc: {book.desc}</p>}
+    //     {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
+    //     <button onClick={()=>this.handleSave(book)}>Save Book</button>
+    //   </div>
+    // }
+    // )}
+    // const {books} = this.props.books;
+    // // const {searchResults} = this.props.searchResults;
+    // console.log('books props: ', this.props.books);
+    // console.log('searchResults props: ', this.props.searchResults);
+    // // console.log('render showBooks is', showBooks);
+    // let bookDisplay = books.map((book, index)=> (
+    //   <div key={index}>
+    //     <h1 className='title'>{book.title}</h1><br/>
+    //     {book.price && <p className='price'>Price: {book.price}</p>}<br/>
+    //     {book.author.length>0 && <p>Author: {book.author}</p>}<br/>
+    //     {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
+    //     {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
+    //     {book.desc && <p className='desc'>Desc: {book.desc}</p>}
+    //     {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
+    //     <button onClick={()=>this.handleSave(book)}>Save Book</button>
+    //   </div>
+    // ));
     return (
       <div>
         <h1>Search</h1>
@@ -103,7 +120,26 @@ class SearchForm extends Component {
 
         <ul id="searchResults">
           {/* {bookDisplay === "undefined" ? (null) : (bookDisplay)} */}
-          {bookDisplay}
+          {/* {bookDisplay} */}
+          {/* {searchResults} */}
+          {/* {searchDisplay} */}
+          {searchResults ? 
+            searchResults.map((book,i)=> (
+              <li style={{background: "red"}} key={i}>
+                <h1 className='title'>Title: {book.title}</h1><br/>
+                {book.price ? <p className='price'>Price: {book.price}</p> : ''}<br/>
+                {book.author && <p>Author: {book.author}</p>}<br/>
+                {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
+                {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
+                {book.desc && <p className='desc'>Desc: {book.desc}</p>}
+                {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
+                <button onClick={()=>this.handleSave(book)}>Save Book</button>
+              </li>
+              )
+            )
+           : 
+            <h3>Search results will display here</h3>
+          }
         </ul>
       </div>
     )
@@ -134,7 +170,7 @@ class SearchForm extends Component {
 
 const mapStateToProps = state=>({
   //we gave the booksReducer state an empty key called books, which is why this uses .books
-  books: state.books,
-  searchResults: state.searchResults
+  books: state.books.books,
+  searchResults: state.books.searchResults
 });
 export default connect(mapStateToProps, {getBookData, saveBookToDb})(withRouter(SearchForm));

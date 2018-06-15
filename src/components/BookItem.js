@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 
 
 const BookItem = (props) => {
+  console.log('inside BookItem, props is ', props);
+  // console.log('inside BookItem, props of array is ', props.books[books.length -1]);
   return (
     <li className="list-row">
         <h3>Title: {props.book.title}</h3>
@@ -22,8 +24,8 @@ const BookItem = (props) => {
   )
 }
 
-const mapStateToProps = state => ({
-  books: state.books
-});
+// const mapStateToProps = state => ({
+//   books: state.books.books
+// });
 
-export default connect(mapStateToProps, {removeBook})(BookItem);
+export default connect(null, {removeBook})(BookItem);

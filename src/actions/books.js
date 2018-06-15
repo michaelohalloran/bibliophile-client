@@ -101,9 +101,9 @@ export const addBook = (
 });
 
 export const GET_BOOK_DATA_SUCCESS = 'GET_BOOK_DATA_SUCCESS';
-export const getBookDataSuccess = (books)=> ({
+export const getBookDataSuccess = (bookSearchResults)=> ({
     type: GET_BOOK_DATA_SUCCESS,
-    books
+    bookSearchResults
 });
 
 export const saveBookToDb = (book, history)=> dispatch=> {
@@ -121,6 +121,7 @@ export const saveBookToDb = (book, history)=> dispatch=> {
         .then(res=>res.json())
         .then(response=> {
             console.log('saveBookToDb response is', response)
+            console.log('history is ',history);
             dispatch(saveBook(response))
             history.push('/dashboard')
             console.log('Saved book to DB');
@@ -136,10 +137,12 @@ export const saveBookToDb = (book, history)=> dispatch=> {
 //     if(req.body.review) bookFields.review = req.body.review;
 
 export const SAVE_BOOK = 'SAVE_BOOK';
-export const saveBook = (book) => ({
-    type: SAVE_BOOK,
-    book
-});
+export const saveBook = (book) => dispatch => {
+    dispatch({
+        type: SAVE_BOOK,
+        book
+    });
+};
 
 
 export const REMOVE_BOOK = 'REMOVE_BOOK';
@@ -174,9 +177,12 @@ export const removeBook = (id)=> dispatch=> {
 //BOOK REVIEW/COMMENTS ACTIONS
 
 export const MAKE_BOOK_REVIEW = 'MAKE_BOOK_REVIEW';
-export const makeBookReview = (bookReview, history)=> dispatch=> {
-    fetch(`/api/books/review/${bookReview.id}`, {
-        method: 'PUT',
+export const makeBookReview = (bookReview, bookId, history)=> dispatch=> {
+    console.log('fired makeBookReview book action');
+    console.log('inside book action makeBookReview, bookReview props are ', bookReview);
+    console.log('inside book action makeBookReview, bookReviewID is ', bookId);
+    fetch(`/api/books/review/${bookId}`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             //saved jwtToken to include 'Bearer' at the front
@@ -184,11 +190,13 @@ export const makeBookReview = (bookReview, history)=> dispatch=> {
         },
         body: JSON.stringify(bookReview)
     })
-        .then(res=> {
-            // dispatch({
-            //     type: MAKE_BOOK_REVIEW,
-            //     bookReview
-            // })
+        .then(res=> res.json())
+        .then(data=> {
+            dispatch({
+                type: MAKE_BOOK_REVIEW,
+                bookId,
+                bookReview
+            })
             history.push('/dashboard');
         })
         .catch(err=>console.log(err));

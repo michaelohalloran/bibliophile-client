@@ -15,6 +15,7 @@ class LandingPage extends React.Component {
     componentDidMount() {
         //check for logged in user, if he's auth, redirect him to dash
         if(this.props.auth.isLoggedIn) {
+            console.log('checking auth state inside LandingPage, status is: ', this.props.auth.isLoggedIn);
             this.props.history.push('/dashboard');
         }
 

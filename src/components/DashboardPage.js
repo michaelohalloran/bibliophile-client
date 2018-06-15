@@ -28,10 +28,12 @@ class DashboardPage extends Component {
   
 
   render() {
-    const {books} = this.props.books;
+    const {books} = this.props;
+    //books is an array of book objects
     console.log('book props are', books);
     const bookDisplay = books.map((book, i)=> (
-      <BookItem key={i} book={book} onDeleteClick={this.handleDeleteBook.bind(this, book._id)}/>
+      <BookItem key={i} book={book} />
+      // <BookItem key={i} book={book} onDeleteClick={this.handleDeleteBook.bind(this, book.id)}/>
     ))
     return (
       <div>
@@ -76,7 +78,7 @@ class DashboardPage extends Component {
 
 
 const mapStateToProps = state => ({
-  books: state.books
+  books: state.books.books
 });
 
 export default connect(mapStateToProps, {fetchBooksFromDb, removeBook})(DashboardPage);
