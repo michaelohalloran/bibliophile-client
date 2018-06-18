@@ -1,0 +1,50 @@
+.title {
+    font-size: 3.5rem;
+    color: rgb(115, 36, 36);
+    background-color: #adaca6;
+    width: 50vw;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    /* width: 25%; */
+    padding: 1%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+li {
+    display: inline;
+}
+
+.visitor-nav-btn {
+    background: #3498db;
+    border: 1px solid gray;
+    border-bottom: 1px solid purple;
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+    margin: 1%;
+    padding: 1%;
+}
+
+a:hover {
+    background: white;
+    color: #3498db;
+}
+
+.user-nav-btn {
+    cursor: pointer;
+    font-size: 1.25rem;
+    background: #2b8beb;
+    border: 1px solid gray;
+    text-decoration: none;
+    color: white;
+    margin: 1%;
+    padding: 1%;
+}

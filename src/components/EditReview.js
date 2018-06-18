@@ -17,6 +17,31 @@ class EditReview extends Component {
         this.onChange = this.onChange.bind(this);
     }
 
+    //fill in textarea with any reviews that already exist
+    // componentWillReceiveProps(nextProps) {
+    //     if(nextProps.books.books) {
+    //         console.log('in EditReview, nextProps.books.books is ', nextProps.books.books);
+    //         //need to get specific book here
+    //         const review = nextProps.books.books.review;
+    //         review ? review : '';
+    //         //set state with updated review
+    //         this.setState({
+    //             review: review
+    //         });
+    //     }
+    // }
+
+    // componentDidMount() {
+    //     const {books} = this.props;
+    //     console.log('books inside cDM are ', books);
+    //     console.log('is books an array?', Array.isArray(books));
+    //     const currentIndex = books.findIndex(book=>book._id.toString() === this.props.match.params.book_id);
+    //     console.log('current book idx is', currentIndex);
+    //     console.log('current book is: ', books[currentIndex]);
+    //     console.log('current book review is: ', books[currentIndex].review);
+
+    // }
+
     onChange(e) {
         e.preventDefault();
         this.setState({
@@ -25,20 +50,34 @@ class EditReview extends Component {
     }
     onSubmit(e) {
         e.preventDefault();
-        const bookReview = {
-            text: this.state.review
+        console.log('hit onSubmit in editReview component');
+        const updatedReview = {
+            review: this.state.review
         }
-        this.props.editBookReview(bookReview, this.props.history);
+        this.props.editBookReview(updatedReview, this.props.match.params.book_id, this.props.history);
     }
 
 
-  render() {
+
+
+render() {
+    //get books array
+    const {books} = this.props;
+    //get index of current book
+    const currentIndex = books.findIndex(book=>book._id.toString() === this.props.match.params.book_id);
+    //get current book's review, so it can populate the textarea
+    const currentReview = books[currentIndex].review;
+
     return (
         <div>
             <h1>Edit Book Review</h1>
             <form onSubmit={this.onSubmit}>
-                <textarea />
-                <button onChange={this.onChange}>Submit</button>
+                <textarea 
+                    placeholder={currentReview}
+                    value={this.state.review}
+                    onChange = {this.onChange}
+                />
+                <button>Submit</button>
             </form>
         </div>
     )
@@ -46,7 +85,7 @@ class EditReview extends Component {
 }
 
 const mapStateToProps = state => ({
-    books: state.books
+    books: state.books.books
 });
 
 export default connect(mapStateToProps, {editBookReview})(withRouter(EditReview));

@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 import {fetchBooksFromDb, removeBook} from '../actions/books';
 import BookItem from './BookItem';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
 
 
 class DashboardPage extends Component {
@@ -18,6 +17,7 @@ class DashboardPage extends Component {
   handleDeleteBook(id) {
     console.log('handleDeleteBook function firing, id is ', id);
     this.props.removeBook(id);
+
   }
 
   componentDidMount() {
@@ -82,4 +82,4 @@ const mapStateToProps = state => ({
   books: state.books.books
 });
 
-export default connect(mapStateToProps, {fetchBooksFromDb, removeBook})(withRouter(DashboardPage));
+export default connect(mapStateToProps, {fetchBooksFromDb, removeBook})(DashboardPage);

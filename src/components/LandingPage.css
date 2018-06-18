@@ -3,7 +3,20 @@ body {
     background: url('https://familyreadingcorner.files.wordpress.com/2016/07/reading-in-nature.jpg') no-repeat fixed center center;
     background-size: cover;
 }
-button {
+/* //OTHER IMAGES: */
+/* https://www.pexels.com/search/reading/ */
+/* https://unsplash.com/photos/1MHU3zpTvro */
+/* READING NEAR LAKE, BOOK PILE: https://data.whicdn.com/images/3896534/large.jpg */
+/* BOOKS IN SUN: http://www.romanicalumea.ro/wp-content/uploads/2017/03/book.jpg */
+/* READING IN FIELD: https://i.guim.co.uk/img/static/sys-images/guardian/Pix/pictures/2012/1/9/1326108641720/A-woman-reading-a-book-007.jpg */
+/* READ UNDER TREE: https://stevelaube.com/wp-content/uploads/2015/10/bigstock-Little-Boy-Reading-A-Book-Unde-96122933.jpg */
+/* https://thoughtcatalog.files.wordpress.com/2014/11/screen-shot-2014-11-30-at-3-28-55-pm.png */
+/* MOUNTAIN: https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/9ncuAJ0/portrait-tourist-girl-child-7-8-years-against-the-mountains-reading-book-si_say9ezfo_thumbnail-full01.png */
+/* cliff edge:  http://ak0.picdn.net/shutterstock/videos/4732520/thumb/4.jpg*/
+
+
+
+/* button {
     padding: 5px;
     margin: 5px;
 }
@@ -12,4 +25,17 @@ input {
     text-align: center;
     padding: 5px;
     margin: 5px;
+} */
+
+button, input {
+  font-size: 1.5rem;
+}
+
+#landing-intro {
+    color: white;
+    font-size: 1.25rem;
+    background: #3498db;
+    max-width: 500px;
+    margin-right: auto;
+    margin-left: auto;
 }

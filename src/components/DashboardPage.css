@@ -21,8 +21,8 @@
   }
   
   img {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
   }
   
   textarea {
@@ -33,4 +33,21 @@
     display: inline-block;
     width: 30%;
     margin: 1%;
+  }
+
+  .title-text {
+    font-size: 1.2rem;
+    color: #e4e4e4;
+    margin: 0;
+  }
+
+  .dash-btn {
+    cursor: pointer;
+    font-size: 1.2rem;
+    background: #2b8beb;
+    border: 1px solid gray;
+    text-decoration: none;
+    color: white;
+    padding: 0;
+    margin: 1.5%;
   }

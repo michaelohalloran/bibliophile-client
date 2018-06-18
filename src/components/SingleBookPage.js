@@ -68,7 +68,7 @@ class SingleBookPage extends Component {
         
             {singleBook.review.length > 0 ? (
                 <div>
-                    <Link to="/edit-review">Edit book review</Link>
+                    <Link to={`/edit-review/${this.props.match.params.id}`}>Edit book review</Link>
                     <button onClick={this.handleDelete}>Delete review</button>
                 </div>
             ) : (

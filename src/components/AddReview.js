@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {makeBookReview } from '../actions/books';
+import {editBookReview } from '../actions/books';
 
 class AddReview extends Component {
 
@@ -33,7 +33,7 @@ class AddReview extends Component {
             review: this.state.review
         }
         // console.log('bookReview id is ', bookReview._id);
-        this.props.makeBookReview(bookReview, this.props.match.params.book_id, this.props.history);
+        this.props.editBookReview(bookReview, this.props.match.params.book_id, this.props.history);
     }
 
 
@@ -58,4 +58,4 @@ const mapStateToProps = state => ({
     books: state.books
 });
 
-export default connect(mapStateToProps, {makeBookReview})(withRouter(AddReview));
+export default connect(mapStateToProps, {editBookReview})(withRouter(AddReview));

@@ -242,10 +242,28 @@ export const deleteBookReview = (bookId) => dispatch => {
 
 
 export const EDIT_BOOK_REVIEW = 'EDIT_BOOK_REVIEW';
-export const editBookReview = (id, updates)=> ({
-    type: EDIT_BOOK_REVIEW,
-    id,
-    updates
-});
-
+export const editBookReview = (reviewUpdates, bookId, history)=> dispatch=> {
+    console.log('fired editBookReview action');
+    console.log('inside book action editBookReview, updates are ', reviewUpdates);
+    console.log('inside book action editBookReview, Id is ', bookId);
+    fetch(`/api/books/review/${bookId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            //saved jwtToken to include 'Bearer' at the front
+            'Authorization': `${localStorage.getItem('jwtToken')}`
+        },
+        body: JSON.stringify(reviewUpdates)
+    })
+    .then(res=> res.json())
+    .then(data=> {
+        dispatch({
+            type: MAKE_BOOK_REVIEW,
+            bookId,
+            reviewUpdates
+        })
+        history.push('/dashboard');
+    })
+    .catch(err=>console.log(err));
+};
 

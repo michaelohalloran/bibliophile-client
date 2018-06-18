@@ -24,7 +24,8 @@ class LandingPage extends React.Component {
         return (
             <div>
                 {/* <h1>Bibliophile</h1> */}
-                <h2>Do you love to read?  Then you've come to the right place</h2>
+                <h2 id="landing-intro">Do you love to read?<br />  
+                Then you've come to the right place</h2>
 
                 {/* <LoginForm handleLogin={this.handleLogin}/> */}
                 {/* <button onSubmit={()=>console.log('hit sign up btn')}>Sign up</button> */}
