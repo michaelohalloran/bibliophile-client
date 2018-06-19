@@ -1,6 +1,5 @@
 import {
     GET_BOOKS,
-    // addBook, 
     MAKE_BOOK_REVIEW,
     DELETE_BOOK_REVIEW,
     SAVE_BOOK,
@@ -48,64 +47,15 @@ const booksReducer = (state=initialState, action)=> {
                     }
                 })
         };
-                // return {
-        //     ...state,
-        //     books: state.books.map((book,i)=> {
-        //         //if a book object's id matches the action id...
-        //         if(book.id === action.bookId) {
-        //             //spread out the state, give that book's review prop our action.bookReview
-        //             return [
-        //                 ...state.books,
-        //                 state.books.map(book=> {
-        //                     if(book.id === action.bookId) {
-        //                         return {...book, review: action.bookReview};
-        //                     } else {
-        //                         return {...book};
-        //                     }
-        //                 })
-        //             ]
-        //         } else {
-        //             return [...state.books];
-        //         }
-        //     })
-        // }
-            // return {
-            //     ...state,
-            //     books: [
-            //         //copy state.books array, 
-            //         ...state.books, 
-
-
-            //         ...action.bookReview]
-                
-            // }
-            // books: state.books.map((book, i)=> {
-            //     if(book.id === action.bookId) {
-            //         book.review = action.bookReview
-            //     }
-            // })
-
-        // case EDIT_BOOK_REVIEW:
-        //     return state.books.map((book)=> {
-        //         if(book.id === action.bookId) {
-        //             return {
-        //                 ...state, 
-        //                 ...action.updates
-        //             };
-        //         } 
-        //     });
-
-       
+        
         case GET_BOOK_DATA_SUCCESS:
             return Object.assign(
                 {}, 
                 state, 
                 {searchResults: action.bookSearchResults}
             );    
-            // return Object.assign({}, state, {searchResults: action.books});    
 
         case DELETE_BOOK_REVIEW:
-            // return state.reviews.filter(review => review.id !== action.id)          
             return {
                 ...state,
                 //return only books with Id's NOT matching the action id (the one we're deleting)

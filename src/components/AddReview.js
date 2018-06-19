@@ -5,11 +5,6 @@ import {makeBookReview } from '../actions/books';
 
 class AddReview extends Component {
 
-    // componentDidMount() {
-    //     console.log('in AddReview, bookID from Link and params is ', this.props);
-    //     console.log('in AddReview, bookID from Link and params is ', this.props.match.params.book_id);
-    //     console.log('id type is ', typeof this.props.match.params.book_id);
-    // }
     constructor(props) {
         super(props);
         this.state = {
@@ -28,11 +23,9 @@ class AddReview extends Component {
     }
     onSubmit(e) {
         e.preventDefault();
-        console.log('hit onSubmit in addReview component');
         const bookReview = {
             review: this.state.review
         }
-        // console.log('bookReview id is ', bookReview._id);
         this.props.makeBookReview(bookReview, this.props.match.params.book_id, this.props.history);
     }
 

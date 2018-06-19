@@ -53,22 +53,18 @@ export const loginUser = (userData)=> dispatch=> {
 
     axios.post(`${API_BASE_URL}/users/login`, userData)
         .then(res=> {
-            console.log('inside login post in authActions, res in then block is:', res);
             const {token} = res.data;
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
             const decoded = jwt_decode(token);
-            console.log(decoded);
             dispatch(setCurrentUser(decoded));
             window.location = '/dashboard';
         })
         .catch(err=>{
-            console.log('err is', err.response.data);
             dispatch({
                 type: GET_ERRORS,
                 errors: err.response.data
             })
-            // console.log('fetch err is: ', err);
         })
 };
 

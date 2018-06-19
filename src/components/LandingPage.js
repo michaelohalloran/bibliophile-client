@@ -7,7 +7,7 @@
 
 import React from 'react';
 import './LandingPage.css';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 
@@ -16,7 +16,6 @@ class LandingPage extends React.Component {
     componentDidMount() {
         //check for logged in user, if he's auth, redirect him to dash
         if(this.props.auth.isLoggedIn) {
-            console.log('checking auth state inside LandingPage, status is: ', this.props.auth.isLoggedIn);
             this.props.history.push('/dashboard');
         }
     }
@@ -24,7 +23,6 @@ class LandingPage extends React.Component {
     componentWillReceiveProps(nextProps) {
         //check for logged in user, if he's auth, redirect him to dash
         if(nextProps.auth.isLoggedIn) {
-            console.log('user logged in, redirecting, auth status is: ', this.props.auth.isLoggedIn);
             this.props.history.push('/dashboard');
         }
     }
@@ -33,14 +31,8 @@ class LandingPage extends React.Component {
     render() {
         return (
             <div>
-                {/* <h1>Bibliophile</h1> */}
                 <h2 id="landing-intro">Do you love to read?<br />  
                 Then you've come to the right place</h2>
-
-                {/* <LoginForm handleLogin={this.handleLogin}/> */}
-                {/* <button onSubmit={()=>console.log('hit sign up btn')}>Sign up</button> */}
-                {/* <Link to='/login'><button>Login</button></Link>
-                <Link to='/register'><button>Sign Up</button></Link> */}
         </div>
         );
     }

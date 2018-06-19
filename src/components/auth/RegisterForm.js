@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
 import {registerUser} from '../../actions/authActions';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
@@ -13,7 +12,6 @@ class RegisterForm extends Component {
 
     componentDidMount() {
         if(this.props.auth.isLoggedIn) {
-            console.log('user already registered');
             this.props.history.push('/dashboard');
         }
     }
@@ -57,7 +55,6 @@ class RegisterForm extends Component {
                 type="email" 
                 name="email" 
                 placeholder="Email"
-                // required
                 error={errors.email}
             />
             <br/>
@@ -67,7 +64,6 @@ class RegisterForm extends Component {
                 type="password" 
                 name="password" 
                 placeholder="Password"
-                // required
                 error={errors.password}
             />
             <br/>
@@ -77,7 +73,6 @@ class RegisterForm extends Component {
                 type="password" 
                 name="password2" 
                 placeholder="Confirm Password"
-                // required
                 error={errors.password2}
             />
             <br/>

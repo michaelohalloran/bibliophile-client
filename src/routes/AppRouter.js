@@ -20,12 +20,10 @@ class AppRouter extends Component {
     componentDidMount() {
         if(localStorage.jwtToken) {
             const token = localStorage.jwtToken;
-            console.log('token is', token);
             //if there's a token, set it as the default
             setAuthToken(token);
             //get user data
             const decodedUser = jwt_decode(token);
-            console.log('decodedUser is', decodedUser);
             //set the current user by dispatching
             store.dispatch(setCurrentUser(decodedUser));
             
@@ -60,36 +58,5 @@ class AppRouter extends Component {
     )
   }
 }
-
-// {localStorage.jwtToken ? 
-//     (<div>
-//         <Route exact path="/dashboard" component={DashboardPage}/>
-//         <Route exact path="/book/:id" component={SingleBookPage}/>
-//         <Route exact path="/search" component={SearchForm}/>
-//         <Route exact path="/add-review" component={AddReview}/>
-//         <Route exact path="/edit-review" component={EditReview}/>
-//     </div>)
-//     : 
-//     (<div>
-//         <Route exact path="/login" component={LoginForm}/>
-//         <Route exact path="/register" component={RegisterForm}/>
-//     </div>)
-//     }
-
-// const AppRouter = ()=> (
-//     <BrowserRouter>
-//         <div>
-//             <Navbar />
-//             <Switch>
-//                 <Route exact path="/" component={LandingPage}/>
-//                 <Route exact path="/dashboard" component={DashboardPage}/>
-//                 <Route exact path="/book" component={SingleBookPage}/>
-//                 <Route exact path="/login" component={LoginForm}/>
-//                 <Route exact path="/register" component={RegisterForm}/>
-//                 <Route exact path="/search" component={SearchForm}/>
-//             </Switch>
-//         </div>
-//     </BrowserRouter>
-// )
 
 export default connect()(AppRouter);

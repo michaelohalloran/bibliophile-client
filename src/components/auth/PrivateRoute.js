@@ -21,5 +21,3 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps)(PrivateRoute);
 
-
-// https://www.udemy.com/mern-stack-front-to-back/learn/v4/questions/4358070

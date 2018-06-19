@@ -16,7 +16,6 @@ export class Navbar extends Component {
     this.props.logoutUser();
   }
   render() {
-
     const {isLoggedIn} = this.props.auth;
 
     const userLinks = (

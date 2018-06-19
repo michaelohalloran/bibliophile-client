@@ -1,4 +1,3 @@
-// import uuid from 'uuid';
 import axios from 'axios';
 import {API_BASE_URL} from '../config';
 //search for book and pull in API data
@@ -22,7 +21,6 @@ export const fetchBooksFromDb = ()=> dispatch => {
     })
         .then(res=>res.json())
         .then(data=> {
-            // console.log('Ran fetchBooksFromDb');
             dispatch({
                 type: GET_BOOKS,
                 payload: data
@@ -55,33 +53,8 @@ export const getBookData = (searchTerm)=> dispatch => {
                 booksArray.push(bookItem);
             })
             dispatch(getBookDataSuccess(booksArray));
-            // console.log('booksArray inside getBookData: ',booksArray);
         })
-//     axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=AIzaSyD04XQFraQwKU0LAmzOW--oI8Li24IooRw`)
-//         .then(response=> {
-//             return response.data;
-//         })
-//         .then(data=> {
-//             console.log(data.items);
-//             let booksArray = [];
-//             data.items.map(book=> {
-//                 let bookItem = {
-//                     title: book.volumeInfo.title,
-//                     price: book.saleInfo.retailPrice ? book.saleInfo.retailPrice.amount : null,
-//                     author: book.volumeInfo.authors.length>0 ? book.volumeInfo.authors.join(', ') : 'None',
-//                     desc:book.volumeInfo.description,
-//                     pageCount:book.volumeInfo.pageCount,
-//                     avgRating: book.volumeInfo.averageRating ? book.volumeInfo.averageRating : 'No rating found',
-//                     thumbnail: book.volumeInfo.imageLinks.thumbnail
-//                 }
-//                 booksArray.push(bookItem);
-//             })
-//             dispatch(getBookDataSuccess(booksArray));
-//             // console.log(booksArray);
-//         })
-//         //dispatch getBookDataError(err), if err, show <p>Error, otherwise empty ''
-//         .catch(err=>console.log(err));
-// }
+
 }
 
 // export const ADD_BOOK = 'ADD_BOOK';
@@ -110,8 +83,6 @@ export const getBookDataSuccess = (bookSearchResults)=> ({
 });
 
 export const saveBookToDb = (book, history)=> dispatch=> {
-    // console.log('token...');
-    // console.log(localStorage.getItem('token'));
     fetch(`${API_BASE_URL}/books`, {
         method: 'POST',
         headers: {
@@ -123,21 +94,11 @@ export const saveBookToDb = (book, history)=> dispatch=> {
     })
         .then(res=>res.json())
         .then(response=> {
-            // console.log('saveBookToDb response is', response)
-            // console.log('history is ',history);
             dispatch(saveBook(response))
             history.push('/dashboard')
-            // console.log('Saved book to DB');
         })
         .catch(err=>console.log(err));
 }
-
-// if(req.body.title) bookFields.title = req.body.title;
-//     if(req.body.author) bookFields.author = req.body.author;
-//     if(req.body.price) bookFields.price = req.body.price;
-//     if(req.body.rating) bookFields.rating = req.body.rating;
-//     if(req.body.image) bookFields.image = req.body.image;
-//     if(req.body.review) bookFields.review = req.body.review;
 
 export const SAVE_BOOK = 'SAVE_BOOK';
 export const saveBook = (book) => dispatch => {
@@ -147,10 +108,8 @@ export const saveBook = (book) => dispatch => {
     });
 };
 
-
 export const REMOVE_BOOK = 'REMOVE_BOOK';
 export const removeBook = (id)=> dispatch=> {
-    // console.log('hit removeBook action, id is ', id);
     fetch(`${API_BASE_URL}/books/${id}`, {
         method: 'DELETE',
         headers: {
@@ -158,13 +117,9 @@ export const removeBook = (id)=> dispatch=> {
             //saved jwtToken to include 'Bearer' at the front
             'Authorization': `${localStorage.getItem('jwtToken')}`
         },
-        // body: JSON.stringify(id)
-        // // body: JSON.stringify({id})
     })
         .then(res=> res.json())
-        // console.log('response inside removeBook is', res.json());
         .then(data=> {
-            // console.log('inside second then block for removeBook');
             //alternative: after deleting book on backend, re-call GET_BOOKS, and now updated state should be shown
             // dispatch(fetchBooksFromDb());
             dispatch({
@@ -181,9 +136,6 @@ export const removeBook = (id)=> dispatch=> {
 
 export const MAKE_BOOK_REVIEW = 'MAKE_BOOK_REVIEW';
 export const makeBookReview = (bookReview, bookId, history)=> dispatch=> {
-    // console.log('fired makeBookReview book action');
-    // console.log('inside book action makeBookReview, bookReview props are ', bookReview);
-    // console.log('inside book action makeBookReview, bookReviewID is ', bookId);
     axios.post(`${API_BASE_URL}/books/review/${bookId}`, bookReview)
         .then(res=> {
             dispatch({
@@ -194,12 +146,10 @@ export const makeBookReview = (bookReview, bookId, history)=> dispatch=> {
             window.location = '/dashboard';
         })
         .catch(err=>{
-            console.log('err is', err.response.data);
             dispatch({
                 type: GET_ERRORS,
                 errors: err.response.data
             })
-            // console.log('fetch err is: ', err);
         })
     };
     // fetch(`/api/books/review/${bookId}`, {
@@ -237,13 +187,6 @@ export const makeBookReview = (bookReview, bookId, history)=> dispatch=> {
 
 export const DELETE_BOOK_REVIEW =  'DELETE_BOOK_REVIEW';
 export const deleteBookReview = (bookId) => dispatch => {
-    console.log('bookId inside deleteBookReview is ', bookId)
-    // fetch(`api/books/review/${bookId}`)
-    //     .then(res=>res.json())
-    //     .then(data=> {
-    //         history.push('/dashboard');
-    //     })
-    //     .catch(err=>console.log(err))
 
         fetch(`${API_BASE_URL}/books/review/${bookId}`, {
             method: 'DELETE',
@@ -263,22 +206,11 @@ export const deleteBookReview = (bookId) => dispatch => {
             })
             window.location = '/dashboard';
         })
-        // .then(data=> {
-        //     console.log('second then block in deleteReview');
-        //     dispatch({
-        //         type: GET_BOOKS,
-        //         payload: data
-        //     })
-        //     window.location = '/dashboard';
-        // })
 }
 
 
 export const EDIT_BOOK_REVIEW = 'EDIT_BOOK_REVIEW';
 export const editBookReview = (reviewUpdates, bookId, history)=> dispatch=> {
-    // console.log('fired editBookReview action');
-    // console.log('inside book action editBookReview, updates are ', reviewUpdates);
-    // console.log('inside book action editBookReview, Id is ', bookId);
     fetch(`${API_BASE_URL}/books/review/${bookId}`, {
         method: 'PUT',
         headers: {
