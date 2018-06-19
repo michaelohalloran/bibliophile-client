@@ -67,6 +67,14 @@ export const loginUser = (userData)=> dispatch=> {
         })
 };
 
+export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
+export const loginUserSuccess = (user, token)=> dispatch=> {
+    dispatch({
+        type: LOGIN_USER_SUCCESS,
+        user,
+        token
+    })
+}
 
 //this dispatch will be result of a successful API call
 // export const submitLoginForm = loginData => (dispatch, getState) => {
