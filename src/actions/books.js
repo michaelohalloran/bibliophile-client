@@ -40,8 +40,9 @@ export const getBookData = (searchTerm)=> dispatch => {
         .then((books) => {
             // console.log('Book items from getBookData fetchcall', books.items);
             let booksArray = [];
+            let bookItem;
             books.items.map(book=> {
-                let bookItem = {
+                bookItem = {
                     title: book.volumeInfo.title,
                     price: book.saleInfo.retailPrice ? book.saleInfo.retailPrice.amount : null,
                     author: book.volumeInfo.authors && book.volumeInfo.authors.length>0 ? book.volumeInfo.authors.join(', ') : 'None',
@@ -51,6 +52,7 @@ export const getBookData = (searchTerm)=> dispatch => {
                     image: book.volumeInfo.imageLinks.thumbnail ? book.volumeInfo.imageLinks.thumbnail : null
                 }
                 booksArray.push(bookItem);
+                return booksArray;
             })
             dispatch(getBookDataSuccess(booksArray));
         })
