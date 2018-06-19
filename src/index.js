@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import 'normalize.css/normalize.css';
+// import 'normalize.css/normalize.css';
 import AppRouter from './routes/AppRouter';
 import store from './store';
 import {Provider} from 'react-redux';

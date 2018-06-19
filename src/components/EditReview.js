@@ -70,13 +70,14 @@ render() {
 
     return (
         <div>
-            <h1>Edit Book Review</h1>
-            <form onSubmit={this.onSubmit}>
+            <form className="review-form" onSubmit={this.onSubmit}>
+            <h1 className="review-title">Edit Book Review</h1>
                 <textarea 
                     placeholder={currentReview}
                     value={this.state.review}
                     onChange = {this.onChange}
                 />
+                <br/>
                 <button>Submit</button>
             </form>
         </div>

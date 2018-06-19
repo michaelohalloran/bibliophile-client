@@ -7,8 +7,9 @@
 
 import React from 'react';
 import './LandingPage.css';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
+
 
 class LandingPage extends React.Component {
 
@@ -18,8 +19,17 @@ class LandingPage extends React.Component {
             console.log('checking auth state inside LandingPage, status is: ', this.props.auth.isLoggedIn);
             this.props.history.push('/dashboard');
         }
-
     }
+
+    componentWillReceiveProps(nextProps) {
+        //check for logged in user, if he's auth, redirect him to dash
+        if(nextProps.auth.isLoggedIn) {
+            console.log('user logged in, redirecting, auth status is: ', this.props.auth.isLoggedIn);
+            this.props.history.push('/dashboard');
+        }
+    }
+
+
     render() {
         return (
             <div>
@@ -40,7 +50,7 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps)(LandingPage);
+export default connect(mapStateToProps)(withRouter(LandingPage));
 
 
 

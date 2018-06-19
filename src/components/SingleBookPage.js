@@ -37,8 +37,8 @@ class SingleBookPage extends Component {
   render() {
       //this is state.books.books
     const {books} = this.props;
-    console.log('this.props inside SingleBookPage', this.props);
-    console.log('book props inside SingleBookPage', books);
+    // console.log('this.props inside SingleBookPage', this.props);
+    // console.log('book props inside SingleBookPage', books);
     //find this book by Id
     // console.log(this.props.match.params);
     //this makes an array consisting solely of the book whose ID is the URL
@@ -48,38 +48,33 @@ class SingleBookPage extends Component {
 
     //this is the first and only item from booksArray:
     let singleBook = bookArray[0];
-    console.log('singleBook is ', singleBook);
-    console.log('current singleBook review is ', singleBook.review);
+    // console.log('singleBook is ', singleBook);
+    // console.log('current singleBook review is ', singleBook.review);
 
     //display the book, with either add or edit/delete review buttons
     const bookDiv = 
-        <div>
-            <h3>Title: {singleBook.title}</h3>
-            <p>Author: {singleBook.author}</p>
+        <div className="book-div">
+            <h3 className="div-title">{singleBook.title}</h3>
+            {singleBook.author && <p className="div-fields">Author: {singleBook.author}</p>}
             <img src={`${singleBook.image}`} alt={singleBook.title} />
-            <p>Price: {singleBook.price}</p>
-            <p>Rating: {singleBook.rating}</p>
-            <p>Review: {singleBook.review}</p>
-            {/* Lorem ipsum dolor sit amet, in dicta consul semper vel, vis at sumo mundi quidam, 
-            in reque epicuri nominavi nec. Duo malis feugiat ea, vis ex meis iusto comprehensam. 
-            Cu petentium definitiones pri, nullam erroribus maluisset te nam. 
-            Eum ex augue voluptatum, et zril labitur equidem his. His eu nostrum deleniti pertinax, 
-            ex ubique invenire erroribus nam, quo ne homero neglegentur. */}
+            {singleBook.price && <p className="div-fields">${singleBook.price}</p>}
+            <p className="div-fields">Rating: {singleBook.rating}</p>
+            {singleBook.review &&<p className="div-fields">{singleBook.review}</p>}
         
             {singleBook.review.length > 0 ? (
                 <div>
-                    <Link to={`/edit-review/${this.props.match.params.id}`}>Edit book review</Link>
-                    <button onClick={this.handleDelete}>Delete review</button>
+                    <Link className="edit-review-btn" to={`/edit-review/${this.props.match.params.id}`}>Edit book review</Link>
+                    <button className="delete-review-btn" onClick={this.handleDelete}>Delete review</button>
                 </div>
             ) : (
-                <Link to={`/add-review/${this.props.match.params.id}`}>Add a book review</Link>
+                <Link className="add-review-btn" to={`/add-review/${this.props.match.params.id}`}>Add a book review</Link>
             )}
         </div>
 
     
     return (
       <div>
-          <h1>SingleBookPage Div</h1>
+          {/* <h1>SingleBookPage Div</h1> */}
           {bookDiv}
           
         {/* <button onClick={()=>console.log('hit Edit post button')}>Edit post</button> */}

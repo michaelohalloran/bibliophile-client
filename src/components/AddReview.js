@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {editBookReview } from '../actions/books';
+import {makeBookReview } from '../actions/books';
 
 class AddReview extends Component {
 
@@ -33,20 +33,24 @@ class AddReview extends Component {
             review: this.state.review
         }
         // console.log('bookReview id is ', bookReview._id);
-        this.props.editBookReview(bookReview, this.props.match.params.book_id, this.props.history);
+        this.props.makeBookReview(bookReview, this.props.match.params.book_id, this.props.history);
     }
 
 
   render() {
+      const {errors} = this.props;
+
     return (
         <div>
-            <h1>Add a Book Review</h1>
-            <form onSubmit={this.onSubmit}>
+            <form className="review-form" onSubmit={this.onSubmit}>
+            <h1 className="review-title">Add a Book Review</h1>
+            {errors.review && <p className="error-msg">{JSON.stringify(errors.review)}</p>}
                 <textarea 
                     placeholder="Add your review"
                     value={this.state.review}
                     onChange = {this.onChange}
                 />
+                <br/>
                 <button>Submit</button>
             </form>
         </div>
@@ -55,7 +59,9 @@ class AddReview extends Component {
 }
 
 const mapStateToProps = state => ({
-    books: state.books
+    books: state.books,
+    errors: state.errors
 });
 
-export default connect(mapStateToProps, {editBookReview})(withRouter(AddReview));
+
+export default connect(mapStateToProps, {makeBookReview})(withRouter(AddReview));

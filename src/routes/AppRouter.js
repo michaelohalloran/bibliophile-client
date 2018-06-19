@@ -4,13 +4,14 @@ import LandingPage from '../components/LandingPage';
 import DashboardPage from '../components/DashboardPage';
 import SingleBookPage from '../components/SingleBookPage';
 import LoginForm from '../components/auth/LoginForm';
+import PrivateRoute from '../components/auth/PrivateRoute';
 import RegisterForm from '../components/auth/RegisterForm';
 import SearchForm from '../components/SearchForm';
 import Navbar from '../components/Navbar';
 import AddReview from '../components/AddReview';
 import EditReview from '../components/EditReview';
 import {connect} from 'react-redux';
-import {setAuthToken, setCurrentUser} from '../actions/authActions';
+import {setAuthToken, setCurrentUser, logoutUser} from '../actions/authActions';
 import jwt_decode from 'jwt-decode';
 import store from '../store';
 
@@ -27,7 +28,12 @@ class AppRouter extends Component {
             console.log('decodedUser is', decodedUser);
             //set the current user by dispatching
             store.dispatch(setCurrentUser(decodedUser));
+            
             //put time expiration code here
+            const currentTime = Date.now()/1000
+            if(decodedUser.exp < currentTime) {
+                store.dispatch(logoutUser());
+            }
         }
     }
 
@@ -43,11 +49,11 @@ class AppRouter extends Component {
                 <Switch>
                     <Route exact path="/login" component={LoginForm}/>
                     <Route exact path="/register" component={RegisterForm}/>
-                    <Route exact path="/dashboard" component={DashboardPage}/>
-                    <Route exact path="/book/:id" component={SingleBookPage}/>
-                    <Route exact path="/search" component={SearchForm}/>
-                    <Route exact path="/add-review/:book_id" component={AddReview}/>
-                    <Route exact path="/edit-review/:book_id" component={EditReview}/>
+                    <PrivateRoute exact path="/dashboard" component={DashboardPage}/>
+                    <PrivateRoute exact path="/book/:id" component={SingleBookPage}/>
+                    <PrivateRoute exact path="/search" component={SearchForm}/>
+                    <PrivateRoute exact path="/add-review/:book_id" component={AddReview}/>
+                    <PrivateRoute exact path="/edit-review/:book_id" component={EditReview}/>
                 </Switch>
             </div>
         </BrowserRouter>

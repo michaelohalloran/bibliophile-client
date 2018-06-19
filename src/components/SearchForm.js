@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {getBookData, saveBookToDb} from '../actions/books';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import './SearchForm.css';
 
 
 class SearchForm extends Component {
@@ -112,28 +113,29 @@ class SearchForm extends Component {
     // ));
     return (
       <div>
-        <h1>Search</h1>
+        {/* <h1>Search</h1> */}
         <form onSubmit={this.handleSearch}>
-          <input type="text" name="searchInput" placeholder="Search for a title/author"/>
+          <input type="text" name="searchInput" placeholder="Search title/author"/>
           <button>Search</button>
         </form>
 
-        <ul id="searchResults">
+        <ul className="search-results-container">
           {/* {bookDisplay === "undefined" ? (null) : (bookDisplay)} */}
           {/* {bookDisplay} */}
           {/* {searchResults} */}
           {/* {searchDisplay} */}
-          {searchResults ? 
+          {searchResults.length !==0 ? 
             searchResults.map((book,i)=> (
-              <li style={{background: "red"}} key={i}>
-                <h1 className='title'>Title: {book.title}</h1><br/>
-                {book.price ? <p className='price'>Price: {book.price}</p> : ''}<br/>
-                {book.author && <p>Author: {book.author}</p>}<br/>
-                {book.image && <img className='image'src={`${book.image}`} alt={book.title}/>}
-                {book.pageCount && <p className='pages'>Pages: {book.pageCount}</p>}<br/>
-                {book.desc && <p className='desc'>Desc: {book.desc}</p>}
-                {typeof book.avgRating ==='number' && <p className='rating'>Average Rating: {book.avgRating}</p>}
+              <li key={i}>
+                <h1 className='search-results-title'>{book.title}</h1><br/>
+                {book.price ? <div><p className='search-results'>Price: {book.price}</p><br/></div>: ''}
+                {book.author && <div><p className='search-results'>Author: {book.author}</p><br/></div>}
+                {book.image && <img className='search-results-image'src={`${book.image}`} alt={book.title}/>}<br/>
+                {book.pageCount && <p className='search-results'>{book.pageCount} pages</p>}<br/>
+                {book.desc && <p className='search-results-desc'>{book.desc}</p>}
+                {typeof book.avgRating ==='number' && <p className='search-results'>Average Rating: {book.avgRating}</p>}
                 <button onClick={()=>this.handleSave(book)}>Save Book</button>
+                <hr/>
               </li>
               )
             )

@@ -6,6 +6,7 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import history from '../history';
+import {GET_ERRORS} from './types';
 
 export const setAuthToken = token=> {
     if(token) {
@@ -26,6 +27,29 @@ export const setCurrentUser = decodedUser => {
 }
 
 export const loginUser = (userData)=> dispatch=> {
+    // fetch('/api/users/login', {
+    //     method: 'POST',
+    //     headers: {
+    //     'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(userData)
+    // })
+    //     .then(res=> res.json())
+    //     .then(data=>{
+    //         if(data.status >=400) {
+    //             console.log('data status is', data.status);
+    //         }
+    //         console.log('logging json data response from login', data)
+    //         // if(data.status)
+    //         // const {token} = data;
+    //         // localStorage.setItem('jwtToken', token);
+    //         // setAuthToken(token);
+    //         // const decoded = jwt_decode(token);
+    //         // console.log(decoded);
+    //         // dispatch(setCurrentUser(decoded));
+    //         // window.location = '/dashboard';
+    //     })
+
     axios.post('/api/users/login', userData)
         .then(res=> {
             const {token} = res.data;
@@ -34,12 +58,16 @@ export const loginUser = (userData)=> dispatch=> {
             const decoded = jwt_decode(token);
             console.log(decoded);
             dispatch(setCurrentUser(decoded));
-            history.push('/dashboard');
             window.location = '/dashboard';
-            
-
         })
-        .catch(err=>console.log('Logging in error', err));
+        .catch(err=>{
+            console.log('err is', err.response.data);
+            dispatch({
+                type: GET_ERRORS,
+                errors: err.response.data
+            })
+            // console.log('fetch err is: ', err);
+        })
 };
 
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
@@ -99,5 +127,10 @@ export const logoutUser = ()=> dispatch=> {
 export const registerUser = (userData, history)=> dispatch=> {
     axios.post('/api/users/register', userData)
         .then(res=> history.push('/login'))
-        .catch(err=>console.log(err));
+        .catch(err=> {
+            dispatch({
+                type: GET_ERRORS,
+                errors: err.response.data
+            });
+        });
 };

@@ -37,8 +37,21 @@
 
   .title-text {
     font-size: 1.2rem;
-    color: #e4e4e4;
-    margin: 0;
+    color: black;
+    display: inline-block;
+    margin: 1%;
+  }
+
+  #dash-search-btn {
+    margin-top: 1%;
+    background: #2ecc71;
+    font-size: 1.5rem;
+    display: inline-block;
+  }
+
+  #dash-search-btn:hover {
+    color: #2ecc71;
+    background: white;
   }
 
   .dash-btn {
@@ -50,4 +63,15 @@
     color: white;
     padding: 0;
     margin: 1.5%;
+  }
+  
+  .dash-img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .dash-price {
+    display: inline-block;
+    margin: 1%;
+    font-size: 1.1rem;
   }

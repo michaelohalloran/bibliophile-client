@@ -1,0 +1,30 @@
+.search-results-container {
+    /* background: #4356b3; */
+    /* background: #63677c; */
+    background: rgba(44, 62, 80, 0.9);
+    border: 1px solid gray;
+}
+
+.search-results-title {
+    color: #efeff8;
+    margin: 0;
+    font-size: 1.6rem;
+    display: inline;
+}
+
+.search-results {
+    font-family: Garamond sans-serif;
+    font-size: 1.3rem;
+    color: #efeff8;
+    display: inline;
+}
+
+.search-results-image {
+    width: 200px;
+    height: 200px;
+}
+
+.search-results-desc {
+    font-size: 1.1rem;
+    color: white;
+}

@@ -1,11 +1,13 @@
-import uuid from 'uuid';
-// import axios from 'axios';
+// import uuid from 'uuid';
+import axios from 'axios';
 //search for book and pull in API data
 //save books searched for to reading list on bookPage
 //make book review
 //edit review
 //delete book review
 //delete book from saved list
+import {GET_ERRORS} from './types';
+
 
 export const GET_BOOKS = 'GET_BOOKS';
 export const fetchBooksFromDb = ()=> dispatch => {
@@ -19,7 +21,7 @@ export const fetchBooksFromDb = ()=> dispatch => {
     })
         .then(res=>res.json())
         .then(data=> {
-            console.log('Ran fetchBooksFromDb');
+            // console.log('Ran fetchBooksFromDb');
             dispatch({
                 type: GET_BOOKS,
                 payload: data
@@ -37,7 +39,7 @@ export const getBookData = (searchTerm)=> dispatch => {
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=AIzaSyD04XQFraQwKU0LAmzOW--oI8Li24IooRw`)
         .then((response) => response.json())
         .then((books) => {
-            console.log('Book items from getBookData fetchcall', books.items);
+            // console.log('Book items from getBookData fetchcall', books.items);
             let booksArray = [];
             books.items.map(book=> {
                 let bookItem = {
@@ -52,7 +54,7 @@ export const getBookData = (searchTerm)=> dispatch => {
                 booksArray.push(bookItem);
             })
             dispatch(getBookDataSuccess(booksArray));
-            console.log('booksArray inside getBookData: ',booksArray);
+            // console.log('booksArray inside getBookData: ',booksArray);
         })
 //     axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=AIzaSyD04XQFraQwKU0LAmzOW--oI8Li24IooRw`)
 //         .then(response=> {
@@ -81,24 +83,24 @@ export const getBookData = (searchTerm)=> dispatch => {
 // }
 }
 
-export const ADD_BOOK = 'ADD_BOOK';
-export const addBook = (
-    {
-        title='',
-        author='',
-        price = 0,
-        avgRating = 0
-    } = {}
-) => ({
-    type: ADD_BOOK,
-    book: {
-        id: uuid(),
-        title,
-        author,
-        price,
-        avgRating
-    }
-});
+// export const ADD_BOOK = 'ADD_BOOK';
+// export const addBook = (
+//     {
+//         title='',
+//         author='',
+//         price = 0,
+//         avgRating = 0
+//     } = {}
+// ) => ({
+//     type: ADD_BOOK,
+//     book: {
+//         id: uuid(),
+//         title,
+//         author,
+//         price,
+//         avgRating
+//     }
+// });
 
 export const GET_BOOK_DATA_SUCCESS = 'GET_BOOK_DATA_SUCCESS';
 export const getBookDataSuccess = (bookSearchResults)=> ({
@@ -120,11 +122,11 @@ export const saveBookToDb = (book, history)=> dispatch=> {
     })
         .then(res=>res.json())
         .then(response=> {
-            console.log('saveBookToDb response is', response)
-            console.log('history is ',history);
+            // console.log('saveBookToDb response is', response)
+            // console.log('history is ',history);
             dispatch(saveBook(response))
             history.push('/dashboard')
-            console.log('Saved book to DB');
+            // console.log('Saved book to DB');
         })
         .catch(err=>console.log(err));
 }
@@ -147,7 +149,7 @@ export const saveBook = (book) => dispatch => {
 
 export const REMOVE_BOOK = 'REMOVE_BOOK';
 export const removeBook = (id)=> dispatch=> {
-    console.log('hit removeBook action, id is ', id);
+    // console.log('hit removeBook action, id is ', id);
     fetch(`/api/books/${id}`, {
         method: 'DELETE',
         headers: {
@@ -161,7 +163,7 @@ export const removeBook = (id)=> dispatch=> {
         .then(res=> res.json())
         // console.log('response inside removeBook is', res.json());
         .then(data=> {
-            console.log('inside second then block for removeBook');
+            // console.log('inside second then block for removeBook');
             //alternative: after deleting book on backend, re-call GET_BOOKS, and now updated state should be shown
             // dispatch(fetchBooksFromDb());
             dispatch({
@@ -178,29 +180,59 @@ export const removeBook = (id)=> dispatch=> {
 
 export const MAKE_BOOK_REVIEW = 'MAKE_BOOK_REVIEW';
 export const makeBookReview = (bookReview, bookId, history)=> dispatch=> {
-    console.log('fired makeBookReview book action');
-    console.log('inside book action makeBookReview, bookReview props are ', bookReview);
-    console.log('inside book action makeBookReview, bookReviewID is ', bookId);
-    fetch(`/api/books/review/${bookId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            //saved jwtToken to include 'Bearer' at the front
-            'Authorization': `${localStorage.getItem('jwtToken')}`
-        },
-        body: JSON.stringify(bookReview)
-    })
-        .then(res=> res.json())
-        .then(data=> {
+    // console.log('fired makeBookReview book action');
+    // console.log('inside book action makeBookReview, bookReview props are ', bookReview);
+    // console.log('inside book action makeBookReview, bookReviewID is ', bookId);
+    axios.post(`/api/books/review/${bookId}`, bookReview)
+        .then(res=> {
             dispatch({
                 type: MAKE_BOOK_REVIEW,
                 bookId,
                 bookReview
             })
-            history.push('/dashboard');
+            window.location = '/dashboard';
         })
-        .catch(err=>console.log(err));
-};
+        .catch(err=>{
+            console.log('err is', err.response.data);
+            dispatch({
+                type: GET_ERRORS,
+                errors: err.response.data
+            })
+            // console.log('fetch err is: ', err);
+        })
+    };
+    // fetch(`/api/books/review/${bookId}`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         //saved jwtToken to include 'Bearer' at the front
+    //         'Authorization': `${localStorage.getItem('jwtToken')}`
+    //     },
+    //     body: JSON.stringify(bookReview)
+    // })
+    //     // .then(res=> console.log('json response is: ', res.json()))
+    //     .then(res=> res.json())
+    //     .then(data=> {
+    //         // if(data.status >=400) {
+    //         //     console.log('in make book rev if, response data status is', data.status);
+    //         // }
+    //         dispatch({
+    //             type: MAKE_BOOK_REVIEW,
+    //             bookId,
+    //             bookReview
+    //         })
+    //         history.push('/dashboard');
+    //     })
+    //     .catch(err=>{
+    //         console.log('make book review err is', err);
+    //         dispatch({
+    //             type: GET_ERRORS,
+    //             errors: err
+    //         })
+    //         // console.log('fetch err is: ', err);
+    //     })
+        // .catch(err=>console.log(err));
+// };
 
 export const DELETE_BOOK_REVIEW =  'DELETE_BOOK_REVIEW';
 export const deleteBookReview = (bookId) => dispatch => {
@@ -228,7 +260,7 @@ export const deleteBookReview = (bookId) => dispatch => {
                 type: DELETE_BOOK_REVIEW,
                 bookId
             })
-            // window.location = '/dashboard';
+            window.location = '/dashboard';
         })
         // .then(data=> {
         //     console.log('second then block in deleteReview');
@@ -243,9 +275,9 @@ export const deleteBookReview = (bookId) => dispatch => {
 
 export const EDIT_BOOK_REVIEW = 'EDIT_BOOK_REVIEW';
 export const editBookReview = (reviewUpdates, bookId, history)=> dispatch=> {
-    console.log('fired editBookReview action');
-    console.log('inside book action editBookReview, updates are ', reviewUpdates);
-    console.log('inside book action editBookReview, Id is ', bookId);
+    // console.log('fired editBookReview action');
+    // console.log('inside book action editBookReview, updates are ', reviewUpdates);
+    // console.log('inside book action editBookReview, Id is ', bookId);
     fetch(`/api/books/review/${bookId}`, {
         method: 'PUT',
         headers: {

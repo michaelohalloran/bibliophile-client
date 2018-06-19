@@ -11,6 +11,13 @@ class RegisterForm extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    componentDidMount() {
+        if(this.props.auth.isLoggedIn) {
+            console.log('user already registered');
+            this.props.history.push('/dashboard');
+        }
+    }
+
     onSubmit(e) {
         e.preventDefault();
      
@@ -31,7 +38,8 @@ class RegisterForm extends Component {
     }
 
   render() {
-      
+      const {errors} = this.props;
+      console.log('errors in register are ', errors);
     return (
       <div>
         <form onSubmit={this.onSubmit}>
@@ -39,29 +47,41 @@ class RegisterForm extends Component {
                 type="text" 
                 name="name" 
                 placeholder="Name"
-                required
+                // required
+                // error={errors.name}
             />
+            <br/>
+            {errors.name && <p className="error-msg">{JSON.stringify(errors.name)}</p>}
             <br/>
             <input 
                 type="email" 
                 name="email" 
                 placeholder="Email"
-                required
+                // required
+                error={errors.email}
             />
+            <br/>
+            {errors.email && <p className="error-msg">{JSON.stringify(errors.email)}</p>}
             <br/>
             <input 
                 type="password" 
                 name="password" 
                 placeholder="Password"
-                required
+                // required
+                error={errors.password}
             />
+            <br/>
+            {errors.password && <p className="error-msg">{JSON.stringify(errors.password)}</p>}
             <br/>
             <input 
                 type="password" 
                 name="password2" 
                 placeholder="Confirm Password"
-                required
+                // required
+                error={errors.password2}
             />
+            <br/>
+            {errors.password2 && <p className="error-msg">{JSON.stringify(errors.password2)}</p>}
             <br/>
             <button>Sign Up</button>
         </form>
@@ -71,7 +91,8 @@ class RegisterForm extends Component {
 }
 
 const mapStateToProps = state=> ({
-    auth: state.auth
+    auth: state.auth,
+    errors: state.errors
 });
 
 export default connect(mapStateToProps, {registerUser})(withRouter(RegisterForm));
