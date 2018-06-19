@@ -26,8 +26,12 @@ const booksReducer = (state=initialState, action)=> {
                 books: action.payload
             }
         case REMOVE_BOOK:
+        const books = state.books.filter(book=>book.id !==action.id);
         //return all books whose Id's don't match the one we just deleted
-            return state.books.filter(book=>book.id !==action.id);
+            return {
+                ...state,
+                books
+            }
         case MAKE_BOOK_REVIEW: 
             return {
                 ...state,

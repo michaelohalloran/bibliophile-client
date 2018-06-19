@@ -67,16 +67,20 @@ render() {
     const currentIndex = books.findIndex(book=>book._id.toString() === this.props.match.params.book_id);
     //get current book's review, so it can populate the textarea
     const currentReview = books[currentIndex].review;
+    console.log('current review is ', currentReview);
 
     return (
         <div>
             <form className="review-form" onSubmit={this.onSubmit}>
             <h1 className="review-title">Edit Book Review</h1>
                 <textarea 
-                    placeholder={currentReview}
-                    value={this.state.review}
+                    // placeholder={currentReview}
+                    // value={currentReview}
                     onChange = {this.onChange}
-                />
+
+                >
+                {currentReview}
+                </textarea>
                 <br/>
                 <button>Submit</button>
             </form>

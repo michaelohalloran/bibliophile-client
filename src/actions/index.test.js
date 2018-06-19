@@ -4,6 +4,9 @@ import {GET_BOOKS, makeBookReview, MAKE_BOOK_REVIEW} from './books';
 
 describe('Books actions', ()=> {
 
+    //beforeAll, make request to login endpoint, get token, register dummy person for testing
+    //save that token to localStorage, use normal fetch to do this
+
     it('should dispatch GET_BOOKS action', ()=> {
         const books = [];
         const action = {
