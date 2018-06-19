@@ -29,21 +29,34 @@ class DashboardPage extends Component {
 
   render() {
     const {books} = this.props;
-    let bookDisplay;
-    //books is an array of book objects
-    console.log('book props are', books);
-    if(typeof books !== undefined) {
-      bookDisplay = books.map((book, i)=> (
-        // <BookItem key={i} book={book} />
-        <BookItem key={book._id} book={book} onDeleteClick={this.handleDeleteBook.bind(this, book._id)}/>
-        // <BookItem key={i} book={book} onDeleteClick={this.handleDeleteBook.bind(this, book.id)}/>
-      ))
-    }
+    console.log('books is ', books);
+    console.log('books.books is ', books.books);
+    console.log('books[0] is ', books[0]);
+
+    // let bookDisplay;
+    // //books is an array of book objects
+    // console.log('book props are', books);
+    // if(typeof books !== undefined) {
+    //   bookDisplay = books.map((book, i)=> (
+    //     // <BookItem key={i} book={book} />
+    //     <BookItem key={book._id} book={book} onDeleteClick={this.handleDeleteBook.bind(this, book._id)}/>
+    //     // <BookItem key={i} book={book} onDeleteClick={this.handleDeleteBook.bind(this, book.id)}/>
+    //   ))
+    // }
     return (
       <div>
         <Link className="user-nav-btn" id="dash-search-btn" to="/search">Search for Books</Link><br/>
         <ul>
-          {bookDisplay}
+          {/* {bookDisplay} */}
+          {books.length > 0 ? 
+            books.map((book, i)=> (
+              // <BookItem key={i} book={book} />
+              <BookItem key={book._id} book={book} onDeleteClick={this.handleDeleteBook.bind(this, book._id)}/>
+              // <BookItem key={i} book={book} onDeleteClick={this.handleDeleteBook.bind(this, book.id)}/>
+            ))
+            : <h3>No books found.</h3>
+          }
+    
         </ul>
 
         {/* <div className="list-row">

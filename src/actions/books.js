@@ -1,5 +1,6 @@
 // import uuid from 'uuid';
 import axios from 'axios';
+import {API_BASE_URL} from '../config';
 //search for book and pull in API data
 //save books searched for to reading list on bookPage
 //make book review
@@ -11,7 +12,7 @@ import {GET_ERRORS} from './types';
 
 export const GET_BOOKS = 'GET_BOOKS';
 export const fetchBooksFromDb = ()=> dispatch => {
-    fetch('/api/books/all', {
+    fetch(`${API_BASE_URL}/books/all`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -111,7 +112,7 @@ export const getBookDataSuccess = (bookSearchResults)=> ({
 export const saveBookToDb = (book, history)=> dispatch=> {
     // console.log('token...');
     // console.log(localStorage.getItem('token'));
-    fetch('/api/books', {
+    fetch(`${API_BASE_URL}/books`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -150,7 +151,7 @@ export const saveBook = (book) => dispatch => {
 export const REMOVE_BOOK = 'REMOVE_BOOK';
 export const removeBook = (id)=> dispatch=> {
     // console.log('hit removeBook action, id is ', id);
-    fetch(`/api/books/${id}`, {
+    fetch(`${API_BASE_URL}/books/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -183,7 +184,7 @@ export const makeBookReview = (bookReview, bookId, history)=> dispatch=> {
     // console.log('fired makeBookReview book action');
     // console.log('inside book action makeBookReview, bookReview props are ', bookReview);
     // console.log('inside book action makeBookReview, bookReviewID is ', bookId);
-    axios.post(`/api/books/review/${bookId}`, bookReview)
+    axios.post(`${API_BASE_URL}/books/review/${bookId}`, bookReview)
         .then(res=> {
             dispatch({
                 type: MAKE_BOOK_REVIEW,
@@ -244,7 +245,7 @@ export const deleteBookReview = (bookId) => dispatch => {
     //     })
     //     .catch(err=>console.log(err))
 
-        fetch(`/api/books/review/${bookId}`, {
+        fetch(`${API_BASE_URL}/books/review/${bookId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -278,7 +279,7 @@ export const editBookReview = (reviewUpdates, bookId, history)=> dispatch=> {
     // console.log('fired editBookReview action');
     // console.log('inside book action editBookReview, updates are ', reviewUpdates);
     // console.log('inside book action editBookReview, Id is ', bookId);
-    fetch(`/api/books/review/${bookId}`, {
+    fetch(`${API_BASE_URL}/books/review/${bookId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

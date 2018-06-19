@@ -4,6 +4,7 @@
 //loginUser (if api call succeeds, then dispatch success action(loginUser action to update state w/ email and password))
 //if it fails, dispatch a failure action for handling failure state
 import axios from 'axios';
+import {API_BASE_URL} from '../config';
 import jwt_decode from 'jwt-decode';
 import history from '../history';
 import {GET_ERRORS} from './types';
@@ -50,8 +51,9 @@ export const loginUser = (userData)=> dispatch=> {
     //         // window.location = '/dashboard';
     //     })
 
-    axios.post('/api/users/login', userData)
+    axios.post(`${API_BASE_URL}/users/login`, userData)
         .then(res=> {
+            console.log('inside login post in authActions, res in then block is:', res);
             const {token} = res.data;
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
@@ -125,7 +127,7 @@ export const logoutUser = ()=> dispatch=> {
 //REGISTER ACTIONS
 //************************************************************** */
 export const registerUser = (userData, history)=> dispatch=> {
-    axios.post('/api/users/register', userData)
+    axios.post(`${API_BASE_URL}/users/register`, userData)
         .then(res=> history.push('/login'))
         .catch(err=> {
             dispatch({
