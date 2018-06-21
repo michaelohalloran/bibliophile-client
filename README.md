@@ -1,3 +1,43 @@
+<u><b>APP NAME</b></u>: Bibliophile
+
+<u><b>LINK</b></u>: https://hopeful-noether-1c41f2.netlify.com/
+
+<strong>Screenshot</strong>: ![Bibliophile](https://github.com/mike31415/bibliophile-client/blob/master/screenshot.JPG)
+  
+<u><b>OVERVIEW</b></u>: This app enables users to register and log in, then search for books using the Google Books API.  The user can then choose to save the book to their reading list (which comes with title, author, price, description, and average reading ratings).  Once saved the user can add, edit, and delete their own personal book reviews for each book.  
+
+<u><b>API</b></u>:  
+GET(/api/books/all) - to retrieve all books  
+GET(/api/books/:book_id) - to retrieve a single book by ID  
+POST(api/books) - to create a new book item  
+POST(api/books/review/:book_id) - to create a new book review  
+PUT(/api/books/review/:book_id) - to update a book review  
+DELETE(/api/books/:id) - to delete a book  
+DELETE(/api/books/review/:book_id) - to delete a book review  
+    
+<u><b>TECHNOLOGY</b></u>:  
+HTML  
+CSS  
+Javascript  
+NodeJS  
+Mongoose/MongoDB  
+ReactJS  
+Redux  
+Google Books API  
+Deployment/hosting with Heroku, mLab, and Netlify  
+Continuous integration with Travis CI  
+Testing with Mocha, Chai, and Enzyme  
+    
+<u><b>ACKNOWLEDGEMENTS</b></u>:  
+Ray Smith  
+Brad Traversy  
+Steve Hartzog  
+Thinkful 
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
