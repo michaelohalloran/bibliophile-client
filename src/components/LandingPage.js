@@ -33,6 +33,7 @@ class LandingPage extends React.Component {
             <div>
                 <h2 id="landing-intro">Do you love to read?<br />  
                 Then you've come to the right place</h2>
+                <p id="demo">Demo login: email: jimmy@gmail.com, password: 123456</p>
         </div>
         );
     }

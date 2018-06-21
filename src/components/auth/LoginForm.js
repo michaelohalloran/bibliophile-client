@@ -42,6 +42,7 @@ class LoginForm extends Component {
                     type="text" 
                     name="email" 
                     placeholder="Email"
+                    required
                 />
                 <br />
                 {errors.email && <p className="error-msg">{JSON.stringify(errors.email)}</p>}
@@ -50,6 +51,7 @@ class LoginForm extends Component {
                     type="password" 
                     name="password" 
                     placeholder="Password"
+                    required
                 />
                 <br/>
                 {errors.password && <p className="error-msg">{JSON.stringify(errors.password)}</p>}

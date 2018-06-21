@@ -45,7 +45,7 @@ class RegisterForm extends Component {
                 type="text" 
                 name="name" 
                 placeholder="Name"
-                // required
+                required
                 // error={errors.name}
             />
             <br/>
@@ -55,6 +55,7 @@ class RegisterForm extends Component {
                 type="email" 
                 name="email" 
                 placeholder="Email"
+                required
                 error={errors.email}
             />
             <br/>
@@ -64,6 +65,7 @@ class RegisterForm extends Component {
                 type="password" 
                 name="password" 
                 placeholder="Password"
+                required
                 error={errors.password}
             />
             <br/>
@@ -73,6 +75,7 @@ class RegisterForm extends Component {
                 type="password" 
                 name="password2" 
                 placeholder="Confirm Password"
+                required
                 error={errors.password2}
             />
             <br/>

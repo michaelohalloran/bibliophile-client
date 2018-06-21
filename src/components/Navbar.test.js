@@ -1,11 +1,12 @@
 import React from 'react';
-import {mount} from 'enzyme';
+import {shallow} from 'enzyme';
 import {Navbar} from './Navbar';
 
 xdescribe('Navbar', ()=> {
 
     it('renders without crashing', ()=> {
-        mount(<Navbar />);
+        const isLoggedIn = true;
+        shallow(<Navbar auth={{isLoggedIn}}/>);
     });
     
 });

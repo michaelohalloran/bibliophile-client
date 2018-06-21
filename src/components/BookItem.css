@@ -5,3 +5,16 @@
     background-color: rgba(138,175,208, 0.8);
     margin: 0;
 }
+
+@media (max-width: 600px) {
+    h1, h2, h3, h4, h5, h6, p, li, input, button {
+        font-size: medium;
+    }
+  
+    .list-row {
+      display: block;
+      width: 50vw;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }

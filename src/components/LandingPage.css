@@ -13,6 +13,15 @@ body {
     margin-left: auto;
 }
 
+#demo {
+    margin-top: 5px;
+    background: #adaca6;
+    width: 40vw;
+    margin-right: auto;
+    margin-left: auto;
+    font-weight: bold;
+    font-size: 14px;
+}
 /* //OTHER IMAGES: */
 /* https://www.pexels.com/search/reading/ */
 /* https://unsplash.com/photos/1MHU3zpTvro */
