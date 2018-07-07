@@ -15,14 +15,13 @@ const BookItem = (props) => {
     </div>
      : 
       <div>
-        <br/>
-        <br/>
+        <h6 className="dash-price">No price found</h6>
       </div>
   }
         <img className="dash-img" src={`${props.book.image}`} alt={props.book.title}></img>
         <br />
         <Link className="dash-btn" to={`/book/${props.book._id}`}>Read more</Link>
-        <button className="dash-btn"onClick={props.onDeleteClick}>Delete book</button>
+        <button className="dash-btn"onClick={props.onDeleteClick}>Delete</button>
       </li>
   )
 }

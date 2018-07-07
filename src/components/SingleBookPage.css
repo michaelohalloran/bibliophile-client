@@ -23,7 +23,7 @@
 
   .edit-review-btn, .add-review-btn, .delete-review-btn {
     cursor: pointer;
-    background: blue;
+    background: #509cce;
     text-decoration: none;
     padding: 1%;
     margin: 1.5%;
@@ -34,10 +34,10 @@
   }
 
   .add-review-btn {
-    background: #1abc9c;
+    background: #689ec2;
   }
   .delete-review-btn {
-    background: red;
+    background: #e74c3c;
   }
 
   .review-form {

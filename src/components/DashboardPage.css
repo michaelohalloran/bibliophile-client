@@ -19,6 +19,22 @@
   ul {
     list-style: none;
   }
+
+  ul.dash-ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  /* ul.dash-ul {
+    display: table-row;
+} */
+
+/* .dash-container {
+  display: table;
+  width: 100%;
+  text-align: center;
+} */
   
   img {
     width: 150px;
@@ -44,25 +60,27 @@
 
   #dash-search-btn {
     margin-top: 1%;
-    background: #2ecc71;
+    background: #37A7F2;
     font-size: 1.5rem;
     display: inline-block;
   }
 
   #dash-search-btn:hover {
-    color: #2ecc71;
+    color: #37A7F2;
     background: white;
   }
 
   .dash-btn {
     cursor: pointer;
     font-size: 1.2rem;
-    background: #2b8beb;
+    background: #37A7F2;
     border: 1px solid gray;
     text-decoration: none;
     color: white;
-    padding: 0;
-    margin: 1.5%;
+    padding: 2%;
+    margin: 2.5%;
+    font-family: 'Roboto';
+    width: 100px;
   }
   
   .dash-img {
@@ -70,6 +88,7 @@
     height: auto;
     width: 200px;
     height: 200px;
+    margin: 2%;
   }
 
   .dash-price {

@@ -19,14 +19,14 @@ export class Navbar extends Component {
     const {isLoggedIn} = this.props.auth;
 
     const userLinks = (
-      <ul>
+      <ul className="nav-ul">
         <li><NavLink className="user-nav-btn" to="/" exact={true}>Home</NavLink></li>
         <button className="user-nav-btn" onClick={this.handleLogout}>Logout</button>
       </ul>
     );
 
     const visitorLinks = (
-      <ul>
+      <ul className="nav-ul">
         <li>
           <NavLink className="visitor-nav-btn" to="/login" exact={true}>Login</NavLink>{' '}
         </li>

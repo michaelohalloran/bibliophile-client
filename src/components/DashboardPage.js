@@ -25,7 +25,7 @@ class DashboardPage extends Component {
     return (
       <div>
         <Link className="user-nav-btn" id="dash-search-btn" to="/search">Search for Books</Link><br/>
-        <ul>
+        <ul className="dash-ul">
           {books.length > 0 ? 
             books.map((book, i)=> (
               <BookItem key={book._id} book={book} onDeleteClick={this.handleDeleteBook.bind(this, book._id)}/>
@@ -33,8 +33,6 @@ class DashboardPage extends Component {
             : <h3>No books found.</h3>
           }
         </ul>
-
-        
       </div>
     )
   }

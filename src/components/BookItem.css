@@ -4,6 +4,17 @@
     box-shadow: 0 0 3px grey;
     background-color: rgba(138,175,208, 0.8);
     margin: 0;
+    /* display: table-cell; */
+    width: 31%;
+    margin: 1%;
+}
+
+
+@media (min-width: 601px) and (max-width: 820px) {
+    .list-row {
+      width: 45%;
+      margin: 2%;
+    }
 }
 
 @media (max-width: 600px) {
@@ -17,4 +28,4 @@
       margin-right: auto;
       margin-left: auto;
     }
-  }
+}
