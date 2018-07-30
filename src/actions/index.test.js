@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from 'enzyme';
-import {API_BASE_URL} from '../config';
+import {API_BASE_URL} from '../config/config';
 import {GET_BOOKS, makeBookReview, MAKE_BOOK_REVIEW} from './books';
 
 describe('Books actions', ()=> {

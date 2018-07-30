@@ -1,5 +1,7 @@
 import axios from 'axios';
-import {API_BASE_URL} from '../config';
+import {API_BASE_URL, GOOGLE_BOOKS_API_KEY} from '../config/config';
+
+
 //search for book and pull in API data
 //save books searched for to reading list on bookPage
 //make book review
@@ -35,7 +37,7 @@ export const showBooks = () => ({
 });
 
 export const getBookData = (searchTerm)=> dispatch => {
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=AIzaSyD04XQFraQwKU0LAmzOW--oI8Li24IooRw`)
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=${GOOGLE_BOOKS_API_KEY}`)
         .then((response) => response.json())
         .then((books) => {
             // console.log('Book items from getBookData fetchcall', books.items);

@@ -1,6 +1,7 @@
 console.log('wired axios');
 
-axios.get('https://www.googleapis.com/books/v1/volumes?q=baseball&key=AIzaSyBV4JsaEhWuCkhm_6gF-72N6ulSt1LdBRw')
+//THIS NEEDS the following tacked to the end, but key is another file: &key=<key goes here>
+axios.get('https://www.googleapis.com/books/v1/volumes?q=baseball')
   .then(response=> {
     return response.data;
   })
